@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0114)file:///D:/Personal%20File/File%20Belajar%20Web/github/Calculator%20Delay%20SJNAM%20Pro%20-%20Offline%20Ready.html -->
+<!-- saved from url=(0073)file:///C:/Users/Errens/Downloads/Perbaikan-bug-kalkulator-SJNAM-Pro.html -->
 <html lang="id" class="scroll-smooth"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
@@ -11,10 +11,10 @@
 <title>Calculator Delay SJNAM Pro v4</title>
 <script src="./index_files/saved_resource"></script>
 <script>tailwind.config={darkMode:'class'}</script>
-<script src="./index_files/chart.umd.min.js.download"></script>
-<script src="./index_files/xlsx.full.min.js.download"></script>
-<script src="./index_files/jspdf.umd.min.js.download"></script>
-<script src="./index_files/jspdf.plugin.autotable.min.js.download"></script>
+<script src="./index_files/chart.umd.min.js.download" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="./index_files/xlsx.full.min.js.download" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="./index_files/jspdf.umd.min.js.download" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="./index_files/jspdf.plugin.autotable.min.js.download" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com/">
 <link href="./index_files/css2" rel="stylesheet">
 <style>
@@ -87,8 +87,8 @@
     <div class="flex items-center gap-2">
       <div id="offlineBadge" class="hidden px-2 py-1 bg-red-500 text-white text-xs font-bold rounded-lg">OFFLINE</div>
       <div class="hidden sm:flex flex-col text-right font-mono text-xs bg-white/10 px-3 py-2 rounded-lg backdrop-blur">
-        <span id="clockWib" class="text-white font-semibold">WIB 14.49.00</span>
-        <span id="clockUtc" class="text-blue-200 opacity-90">UTC 07.49.00</span>
+        <span id="clockWib" class="text-white font-semibold">WIB 15.05.39</span>
+        <span id="clockUtc" class="text-blue-200 opacity-90">UTC 08.05.39</span>
       </div>
       <button id="btnDarkToggle" class="w-9 h-9 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition">
         <svg id="iconDark" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
@@ -98,10 +98,10 @@
   </div>
   <nav class="bg-black/15 backdrop-blur border-t border-white/10 mt-2">
     <div class="max-w-7xl mx-auto px-2 flex gap-1 overflow-x-auto">
-      <button data-tab="input" class="tab-btn active">✈️ Input</button>
+      <button data-tab="input" class="tab-btn">✈️ Input</button>
       <button data-tab="data" class="tab-btn">📊 Data</button>
       <button data-tab="dashboard" class="tab-btn">📈 Dashboard</button>
-      <button data-tab="stations" class="tab-btn">🗺️ Stations</button>
+      <button data-tab="stations" class="tab-btn active">🗺️ Stations</button>
       <button data-tab="dfs" class="tab-btn">🗂️ DFS Bank</button>
       <button data-tab="request" class="tab-btn">📝 Approval</button>
       <button data-tab="settings" class="tab-btn">⚙️ Settings</button>
@@ -112,7 +112,7 @@
 <main class="max-w-7xl mx-auto p-3 md:p-5">
 
 <!-- ============= TAB INPUT (WIZARD 3 LANGKAH) ============= -->
-<section id="tab-input" class="tab-pane active">
+<section id="tab-input" class="tab-pane">
   <div class="card p-5 md:p-7">
     <div class="flex items-start justify-between mb-5">
       <div>
@@ -363,7 +363,7 @@
         <div class="text-slate-400">19:30 UTC+8</div>
       </td>
       <td class="px-2 py-2 text-xs text-center">
-        <div class="font-mono text-blue-600 dark:text-blue-400 font-bold">08:04</div>
+        <div class="font-mono text-blue-600 dark:text-blue-400 font-bold">08:20</div>
       </td>
       <td class="px-2 py-2"><span class="badge bg-red-200 text-red-800 dark:bg-red-900/50 dark:text-red-200">11:45</span></td>
       <td class="px-2 py-2"><span class="flight-status-badge status-delay text-xs">Delay Flight</span></td>
@@ -391,7 +391,7 @@
         <div class="text-slate-400">17:30 UTC+8</div>
       </td>
       <td class="px-2 py-2 text-xs text-center">
-        <div class="font-mono text-blue-600 dark:text-blue-400 font-bold">03:39</div>
+        <div class="font-mono text-blue-600 dark:text-blue-400 font-bold">03:55</div>
       </td>
       <td class="px-2 py-2"><span class="badge bg-red-200 text-red-800 dark:bg-red-900/50 dark:text-red-200">05:20</span></td>
       <td class="px-2 py-2"><span class="flight-status-badge status-delay text-xs">Delay Flight</span></td>
@@ -419,7 +419,7 @@
         <div class="text-slate-400">21:50 UTC+9</div>
       </td>
       <td class="px-2 py-2 text-xs text-center">
-        <div class="font-mono text-blue-600 dark:text-blue-400 font-bold">06:29</div>
+        <div class="font-mono text-blue-600 dark:text-blue-400 font-bold">06:45</div>
       </td>
       <td class="px-2 py-2"><span class="badge bg-red-200 text-red-800 dark:bg-red-900/50 dark:text-red-200">11:30</span></td>
       <td class="px-2 py-2"><span class="flight-status-badge status-delay text-xs">Delay Flight</span></td>
@@ -1391,7 +1391,7 @@
 </section>
 
 <!-- ============= TAB STATIONS ============= -->
-<section id="tab-stations" class="tab-pane">
+<section id="tab-stations" class="tab-pane active">
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
     <div class="card p-5 lg:col-span-1">
       <h3 class="font-bold text-lg mb-4">Tambah / Edit Station</h3>
@@ -1442,7 +1442,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">AMQ</td>
       <td class="px-3 py-2.5 text-sm">Ambon</td>
       <td class="px-3 py-2.5"><span class="badge bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">UTC+9</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">09:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">10:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="AMQ" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="AMQ" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1453,7 +1453,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">BEJ</td>
       <td class="px-3 py-2.5 text-sm">Berau</td>
       <td class="px-3 py-2.5"><span class="badge bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">UTC+8</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">08:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">09:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="BEJ" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="BEJ" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1464,7 +1464,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">BIK</td>
       <td class="px-3 py-2.5 text-sm">Biak</td>
       <td class="px-3 py-2.5"><span class="badge bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">UTC+9</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">09:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">10:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="BIK" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="BIK" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1475,7 +1475,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">BPN</td>
       <td class="px-3 py-2.5 text-sm">Balikpapan</td>
       <td class="px-3 py-2.5"><span class="badge bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">UTC+8</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">08:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">09:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="BPN" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="BPN" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1486,7 +1486,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">BTH</td>
       <td class="px-3 py-2.5 text-sm">Batam - Hang Nadim</td>
       <td class="px-3 py-2.5"><span class="badge bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">UTC+7</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">07:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">08:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="BTH" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="BTH" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1497,7 +1497,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">BUU</td>
       <td class="px-3 py-2.5 text-sm">Muara Bungo</td>
       <td class="px-3 py-2.5"><span class="badge bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">UTC+7</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">07:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">08:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="BUU" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="BUU" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1508,7 +1508,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">BWX</td>
       <td class="px-3 py-2.5 text-sm">Banyuwangi</td>
       <td class="px-3 py-2.5"><span class="badge bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">UTC+7</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">07:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">08:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="BWX" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="BWX" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1519,7 +1519,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">CGK</td>
       <td class="px-3 py-2.5 text-sm">Jakarta Soekarno-Hatta</td>
       <td class="px-3 py-2.5"><span class="badge bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">UTC+7</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">07:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">08:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="CGK" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="CGK" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1530,7 +1530,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">DJB</td>
       <td class="px-3 py-2.5 text-sm">Jambi</td>
       <td class="px-3 py-2.5"><span class="badge bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">UTC+7</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">07:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">08:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="DJB" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="DJB" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1541,7 +1541,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">DJJ</td>
       <td class="px-3 py-2.5 text-sm">Jayapura</td>
       <td class="px-3 py-2.5"><span class="badge bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">UTC+9</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">09:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">10:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="DJJ" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="DJJ" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1552,7 +1552,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">DPS</td>
       <td class="px-3 py-2.5 text-sm">Denpasar Bali</td>
       <td class="px-3 py-2.5"><span class="badge bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">UTC+8</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">08:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">09:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="DPS" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="DPS" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1563,7 +1563,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">GTO</td>
       <td class="px-3 py-2.5 text-sm">Gorontalo</td>
       <td class="px-3 py-2.5"><span class="badge bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">UTC+8</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">08:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">09:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="GTO" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="GTO" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1574,7 +1574,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">HLP</td>
       <td class="px-3 py-2.5 text-sm">Jakarta -  Halim Perdana Kusuma</td>
       <td class="px-3 py-2.5"><span class="badge bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">UTC+7</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">07:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">08:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="HLP" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="HLP" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1585,7 +1585,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">JOG</td>
       <td class="px-3 py-2.5 text-sm">Yogyakarta</td>
       <td class="px-3 py-2.5"><span class="badge bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">UTC+7</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">07:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">08:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="JOG" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="JOG" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1596,7 +1596,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">KNO</td>
       <td class="px-3 py-2.5 text-sm">Medan - Kuala Namu</td>
       <td class="px-3 py-2.5"><span class="badge bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">UTC+7</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">07:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">08:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="KNO" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="KNO" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1607,7 +1607,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">KOE</td>
       <td class="px-3 py-2.5 text-sm">Kupang - El Tari</td>
       <td class="px-3 py-2.5"><span class="badge bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">UTC+8</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">08:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">09:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="KOE" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="KOE" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1618,7 +1618,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">LOP</td>
       <td class="px-3 py-2.5 text-sm">Lombok</td>
       <td class="px-3 py-2.5"><span class="badge bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">UTC+8</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">08:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">09:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="LOP" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="LOP" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1629,7 +1629,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">LUW</td>
       <td class="px-3 py-2.5 text-sm">Luwuk</td>
       <td class="px-3 py-2.5"><span class="badge bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">UTC+8</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">08:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">09:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="LUW" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="LUW" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1640,7 +1640,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">MDC</td>
       <td class="px-3 py-2.5 text-sm">Manado</td>
       <td class="px-3 py-2.5"><span class="badge bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">UTC+8</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">08:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">09:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="MDC" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="MDC" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1651,7 +1651,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">MES</td>
       <td class="px-3 py-2.5 text-sm">Medan</td>
       <td class="px-3 py-2.5"><span class="badge bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">UTC+7</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">07:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">08:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="MES" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="MES" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1662,7 +1662,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">MKQ</td>
       <td class="px-3 py-2.5 text-sm">Merauke</td>
       <td class="px-3 py-2.5"><span class="badge bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">UTC+9</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">09:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">10:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="MKQ" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="MKQ" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1673,7 +1673,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">MOH</td>
       <td class="px-3 py-2.5 text-sm">Morowali</td>
       <td class="px-3 py-2.5"><span class="badge bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">UTC+8</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">08:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">09:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="MOH" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="MOH" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1684,7 +1684,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">NBX</td>
       <td class="px-3 py-2.5 text-sm">Nabire</td>
       <td class="px-3 py-2.5"><span class="badge bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">UTC+9</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">09:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">10:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="NBX" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="NBX" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1695,7 +1695,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">PGK</td>
       <td class="px-3 py-2.5 text-sm">Pangkal Pinang</td>
       <td class="px-3 py-2.5"><span class="badge bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">UTC+7</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">07:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">08:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="PGK" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="PGK" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1706,7 +1706,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">PKN</td>
       <td class="px-3 py-2.5 text-sm">Pangkalan Bun</td>
       <td class="px-3 py-2.5"><span class="badge bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">UTC+7</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">07:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">08:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="PKN" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="PKN" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1717,7 +1717,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">PLW</td>
       <td class="px-3 py-2.5 text-sm">Palul</td>
       <td class="px-3 py-2.5"><span class="badge bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">UTC+8</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">08:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">09:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="PLW" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="PLW" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1728,7 +1728,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">PNK</td>
       <td class="px-3 py-2.5 text-sm">Pontianak</td>
       <td class="px-3 py-2.5"><span class="badge bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">UTC+7</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">07:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">08:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="PNK" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="PNK" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1739,7 +1739,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">RAQ</td>
       <td class="px-3 py-2.5 text-sm">Raha</td>
       <td class="px-3 py-2.5"><span class="badge bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">UTC+8</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">08:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">09:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="RAQ" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="RAQ" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1750,7 +1750,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">SMQ</td>
       <td class="px-3 py-2.5 text-sm">Sampit</td>
       <td class="px-3 py-2.5"><span class="badge bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">UTC+8</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">08:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">09:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="SMQ" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="SMQ" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1761,7 +1761,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">SOQ</td>
       <td class="px-3 py-2.5 text-sm">Sorong</td>
       <td class="px-3 py-2.5"><span class="badge bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">UTC+9</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">09:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">10:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="SOQ" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="SOQ" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1772,7 +1772,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">SRG</td>
       <td class="px-3 py-2.5 text-sm">Semarang</td>
       <td class="px-3 py-2.5"><span class="badge bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">UTC+7</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">07:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">08:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="SRG" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="SRG" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1783,7 +1783,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">SUB</td>
       <td class="px-3 py-2.5 text-sm">Surabaya</td>
       <td class="px-3 py-2.5"><span class="badge bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">UTC+7</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">07:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">08:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="SUB" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="SUB" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1794,7 +1794,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">TIM</td>
       <td class="px-3 py-2.5 text-sm">Timika - Mozes Kilangin</td>
       <td class="px-3 py-2.5"><span class="badge bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">UTC+9</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">09:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">10:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="TIM" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="TIM" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1805,7 +1805,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">TJQ</td>
       <td class="px-3 py-2.5 text-sm">Tanjung Pandan</td>
       <td class="px-3 py-2.5"><span class="badge bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">UTC+7</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">07:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">08:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="TJQ" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="TJQ" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1816,7 +1816,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">TMC</td>
       <td class="px-3 py-2.5 text-sm">Tambolaka</td>
       <td class="px-3 py-2.5"><span class="badge bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">UTC+8</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">08:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">09:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="TMC" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="TMC" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1827,7 +1827,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">TTE</td>
       <td class="px-3 py-2.5 text-sm">Ternate - Sultan Babullah</td>
       <td class="px-3 py-2.5"><span class="badge bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">UTC+9</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">09:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">10:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="TTE" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="TTE" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1838,7 +1838,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">UPG</td>
       <td class="px-3 py-2.5 text-sm">Makassar</td>
       <td class="px-3 py-2.5"><span class="badge bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">UTC+8</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">08:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">09:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="UPG" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="UPG" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1849,7 +1849,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">WMX</td>
       <td class="px-3 py-2.5 text-sm">Wamena</td>
       <td class="px-3 py-2.5"><span class="badge bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">UTC+9</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">09:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">10:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="WMX" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="WMX" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1860,7 +1860,7 @@
       <td class="px-3 py-2.5 font-mono font-bold text-sm">YIA</td>
       <td class="px-3 py-2.5 text-sm">Yogyakarta - Kulon Progo</td>
       <td class="px-3 py-2.5"><span class="badge bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">UTC+7</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">07:48</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">08:05</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="YIA" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="YIA" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -1888,7 +1888,7 @@
       <div class="md:col-span-2">
         <label class="block text-sm font-medium mb-1.5">Pilih Data Delay</label>
         <input type="text" id="reqSearch" placeholder="🔍 Cari flight / route / tanggal..." class="input text-sm mb-1.5">
-        <select id="reqSelect" class="input" size="6"><option value="">-- Pilih Flight --</option></select>
+        <select id="reqSelect" class="input" size="6"><option value="">-- Pilih Flight (121) --</option><option value="1780550589195">1. SJ693 MDC-TTE - 04-Jun-2026 (11:45)</option><option value="1780552592422">2. SJ581 UPG-CGK - 04-Jun-2026 (05:20)</option><option value="1780556691448">3. SJ699 TTE-UPG - 04-Jun-2026 (11:30)</option><option value="1780299486369">4. IN190 CGK-PKN - 29-May-2026 (05:20)</option><option value="1780299685421">5. SJ9171 SMQ-CGK - 27-May-2026 (04:50)</option><option value="1780299780271">6. SJ9170 CGK-SMQ - 27-May-2026 (04:50)</option><option value="1780300085335">7. SJ581 UPG-CGK - 26-May-2026 (05:40)</option><option value="1780300216545">8. SJ699 TTE-UPG - 26-May-2026 (04:40)</option><option value="1780302042964">9. IN7273 DPS-CGK - 18-May-2026 (08:10)</option><option value="1780300383019">10. SJ580 CGK-UPG - 18-May-2026 (04:55)</option><option value="1780300553757">11. SJ055 TJQ-CGK - 18-May-2026 (09:55)</option><option value="1780300468757">12. SJ054 CGK-TJQ - 18-May-2026 (10:00)</option><option value="1780332301580">13. SJ054 CGK-TJQ - 17-May-2026 (09:25)</option><option value="1780300779751">14. SJ562 SUB-UPG - 17-May-2026 (08:15)</option><option value="1780331704858">15. SJ567 UPG-SUB - 17-May-2026 (04:20)</option><option value="1780331571474">16. IN079 PGK-CGK - 17-May-2026 (04:20)</option><option value="1780331974384">17. SJ580 CGK-UPG - 17-May-2026 (04:25)</option><option value="1780331829031">18. SJ184 CGK-PNK - 17-May-2026 (04:35)</option><option value="1780332121703">19. SJ055 TJQ-CGK - 17-May-2026 (09:25)</option><option value="1780332415796">20. IN7074 CGK-PGK - 14-May-2026 (04:30)</option><option value="1780372184734">21. IN170 CGK-SMQ - 11-May-2026 (05:00)</option><option value="1780372277413">22. IN171 SMQ-CGK - 11-May-2026 (04:50)</option><option value="1780332531755">23. SJ552 BEJ-UPG - 05-May-2026 (21:00)</option><option value="1780332636999">24. SJ135 BEJ-BPN - 05-May-2026 (19:40)</option><option value="1780332798327">25. SJ134 BPN-BEJ - 05-May-2026 (05:30)</option><option value="1780333289544">26. SJ903 SOQ-UPG - 04-May-2026 (07:45)</option><option value="1780333046211">27. SJ902 UPG-SOQ - 04-May-2026 (06:45)</option><option value="1780332910499">28. SJ581 UPG-CGK - 04-May-2026 (06:15)</option><option value="1780333395775">29. SJ580 CGK-UPG - 02-May-2026 (04:20)</option><option value="1780381427053">30. SJ588 UPG-TIM - 29-Apr-2026 (05:40)</option><option value="1780387681110">31. SJ184 CGK-PNK - 23-Apr-2026 (05:30)</option><option value="1780387464307">32. SJ594 CGK-UPG - 21-Apr-2026 (05:30)</option><option value="1780387581121">33. SJ6982 UPG-TTE - 21-Apr-2026 (13:25)</option><option value="1780387358066">34. SJ902 UPG-SOQ - 19-Apr-2026 (10:15)</option><option value="1780387241826">35. SJ593 UPG-CGK - 13-Apr-2026 (07:30)</option><option value="1780387066737">36. SJ581 UPG-CGK - 10-Apr-2026 (06:20)</option><option value="1780386993909">37. SJ580 CGK-UPG - 10-Apr-2026 (05:20)</option><option value="1780386823397">38. SJ580 CGK-UPG - 09-Apr-2026 (06:15)</option><option value="1780386887153">39. SJ184 CGK-PNK - 09-Apr-2026 (06:10)</option><option value="1780386631970">40. SJ055 TJQ-CGK - 09-Apr-2026 (07:45)</option><option value="1780386561573">41. SJ054 CGK-TJQ - 09-Apr-2026 (04:00)</option><option value="1780385098228">42. SJ054 CGK-TJQ - 04-Apr-2026 (08:25)</option><option value="1780372481943">43. SJ185 PNK-CGK - 04-Apr-2026 (07:30)</option><option value="1780385434861">44. SJ6983 TTE-UPG - 04-Apr-2026 (05:20)</option><option value="1780385332945">45. SJ073 PGK-CGK - 04-Apr-2026 (08:45)</option><option value="1780385250789">46. SJ072 CGK-PGK - 04-Apr-2026 (06:00)</option><option value="1780385171297">47. SJ055 TJQ-CGK - 04-Apr-2026 (08:20)</option><option value="1780384989085">48. SJ900 UPG-NBX - 03-Apr-2026 (06:05)</option><option value="1780372607034">49. SJ698 UPG-TTE - 31-Mar-2026 (06:25)</option><option value="1780383985128">50. SJ692 TTE-MDC - 30-Mar-2026 (06:35)</option><option value="1780384219596">51. SJ698 UPG-TTE - 30-Mar-2026 (06:40)</option><option value="1780383589672">52. SJ273 DPS-CGK - 30-Mar-2026 (04:45)</option><option value="1780383852224">53. IN7273 DPS-CGK - 30-Mar-2026 (04:45)</option><option value="1780384850069">54. SJ713 YIA-UPG - 30-Mar-2026 (06:15)</option><option value="1780384710807">55. SJ5800 CGK-UPG - 30-Mar-2026 (08:25)</option><option value="1780384601493">56. SJ581 UPG-CGK - 30-Mar-2026 (04:40)</option><option value="1780384492227">57. SJ712 UPG-YIA - 30-Mar-2026 (06:00)</option><option value="1780384299220">58. SJ699 TTE-UPG - 30-Mar-2026 (04:25)</option><option value="1780384078380">59. SJ693 MDC-TTE - 30-Mar-2026 (06:35)</option><option value="1780381729467">60. SJ900 UPG-NBX - 29-Mar-2026 (05:10)</option><option value="1780382173912">61. SJ581 UPG-CGK - 29-Mar-2026 (12:10)</option><option value="1780382349947">62. SJ580 CGK-UPG - 29-Mar-2026 (10:00)</option><option value="1780382522971">63. SJ593 UPG-CGK - 29-Mar-2026 (08:20)</option><option value="1780381940471">64. SJ699 TTE-UPG - 29-Mar-2026 (04:35)</option><option value="1780381812850">65. SJ693 MDC-TTE - 29-Mar-2026 (04:35)</option><option value="1780381522451">66. SJ692 TTE-MDC - 29-Mar-2026 (04:30)</option><option value="1780381169189">67. SJ054 CGK-TJQ - 29-Mar-2026 (08:25)</option><option value="1780381580451">68. SJ698 UPG-TTE - 29-Mar-2026 (04:30)</option><option value="1780381034406">69. SJ713 YIA-UPG - 28-Mar-2026 (05:55)</option><option value="1780380901778">70. SJ055 TJQ-CGK - 28-Mar-2026 (08:25)</option><option value="1780380837282">71. SJ054 CGK-TJQ - 28-Mar-2026 (08:25)</option><option value="1780380704990">72. SJ580 CGK-UPG - 27-Mar-2026 (04:15)</option><option value="1780380639975">73. SJ073 PGK-CGK - 27-Mar-2026 (05:05)</option><option value="1780380569647">74. SJ072 CGK-PGK - 27-Mar-2026 (05:10)</option><option value="1780379973834">75. SJ9272 CGK-DPS - 23-Mar-2026 (04:15)</option><option value="1780380166730">76. SJ593 UPG-CGK - 23-Mar-2026 (04:20)</option><option value="1780372707882">77. SJ699 TTE-UPG - 23-Mar-2026 (05:45)</option><option value="1780379677750">78. SJ054 CGK-TJQ - 21-Mar-2026 (08:25)</option><option value="1780379765005">79. SJ055 TJQ-CGK - 21-Mar-2026 (08:25)</option><option value="1780379530949">80. SJ903 SOQ-UPG - 20-Mar-2026 (04:25)</option><option value="1780379368542">81. SJ134 BPN-BEJ - 19-Mar-2026 (05:30)</option><option value="1780379248410">82. SJ135 BEJ-BPN - 19-Mar-2026 (05:30)</option><option value="1780379139404">83. IN240 SRG-SMQ - 19-Mar-2026 (07:00)</option><option value="1780379040789">84. IN7712 UPG-YIA - 15-Mar-2026 (04:15)</option><option value="1780378888062">85. IN7716 UPG-DPS - 15-Mar-2026 (05:15)</option><option value="1780378755617">86. SJ903 SOQ-UPG - 15-Mar-2026 (05:30)</option><option value="1780372804242">87. SJ594 CGK-UPG - 12-Mar-2026 (05:45)</option><option value="1780378586025">88. SJ061 DJB-CGK - 11-Mar-2026 (07:55)</option><option value="1780378522913">89. SJ060 CGK-DJB - 11-Mar-2026 (04:40)</option><option value="1780373045812">90. SJ054 CGK-TJQ - 06-Mar-2026 (04:00)</option><option value="1780372874386">91. SJ055 TJQ-CGK - 06-Mar-2026 (04:00)</option><option value="1780373136974">92. SJ692 TTE-MDC - 23-Feb-2026 (08:20)</option><option value="1780380312493">93. SJ9273 DPS-CGK - 23-Feb-2026 (04:15)</option><option value="1780373218350">94. IN281 DPS-CGK - 19-Feb-2026 (05:50)</option><option value="1780373373216">95. IN196 SRG-PKN - 17-Feb-2026 (05:20)</option><option value="1780373646280">96. IN280 CGK-DPS - 16-Feb-2026 (04:00)</option><option value="1780373565552">97. IN640 DPS-TMC - 16-Feb-2026 (06:50)</option><option value="1780373747986">98. SJ713 YIA-UPG - 14-Feb-2026 (04:45)</option><option value="1780374548887">99. IN190 CGK-PKN - 12-Feb-2026 (07:40)</option><option value="1780373924735">100. IN195 PKN-SRG - 12-Feb-2026 (05:45)</option><option value="1780373846199">101. IN196 SRG-PKN - 12-Feb-2026 (05:25)</option><option value="1780374771011">102. IN630 TMC-KOE - 01-Feb-2026 (05:25)</option><option value="1780374664630">103. IN640 DPS-TMC - 01-Feb-2026 (05:35)</option><option value="1780375329971">104. SJ902 UPG-SOQ - 26-Jan-2026 (07:50)</option><option value="1780375131931">105. SJ581 UPG-CGK - 26-Jan-2026 (06:20)</option><option value="1780374985135">106. IN7716 UPG-DPS - 26-Jan-2026 (08:55)</option><option value="1780375228911">107. SJ903 SOQ-UPG - 26-Jan-2026 (05:50)</option><option value="1780375564163">108. SJ599 UPG-CGK - 25-Jan-2026 (04:45)</option><option value="1780376228266">109. IN195 PKN-SRG - 23-Jan-2026 (05:50)</option><option value="1780376616005">110. IN190 CGK-PKN - 23-Jan-2026 (05:15)</option><option value="1780375735752">111. IN7593 UPG-CGK - 23-Jan-2026 (07:00)</option><option value="1780375876100">112. SJ135 BEJ-BPN - 23-Jan-2026 (05:50)</option><option value="1780375955655">113. SJ553 UPG-BEJ - 23-Jan-2026 (07:30)</option><option value="1780376068604">114. IN196 SRG-PKN - 23-Jan-2026 (05:50)</option><option value="1780376960237">115. IN190 CGK-PKN - 21-Jan-2026 (04:00)</option><option value="1780376711844">116. IN196 SRG-PKN - 21-Jan-2026 (08:40)</option><option value="1780376877848">117. IN195 PKN-SRG - 21-Jan-2026 (07:30)</option><option value="1780377059976">118. SJ580 CGK-UPG - 17-Jan-2026 (05:05)</option><option value="1780377192980">119. SJ553 UPG-BEJ - 04-Jan-2026 (06:10)</option><option value="1780377373214">120. SJ273 DPS-CGK - 03-Jan-2026 (04:00)</option><option value="1780377968187">121. SJ273 DPS-CGK - 02-Jan-2026 (04:20)</option></select>
       </div>
       <div>
         <label class="block text-sm font-medium mb-1.5">Atau No. Urut</label>
@@ -1935,15 +1935,15 @@
     <div id="dfsUploadStatus" class="hidden mb-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl text-sm text-blue-700 dark:text-blue-300 font-medium"></div>
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
       <div class="bg-slate-50 dark:bg-slate-800 rounded-xl p-3 text-center">
-        <div id="dfsStatDates" class="text-2xl font-bold text-blue-600">2</div>
+        <div id="dfsStatDates" class="text-2xl font-bold text-blue-600">3</div>
         <div class="text-xs text-slate-500 mt-0.5">Tanggal tersimpan</div>
       </div>
       <div class="bg-slate-50 dark:bg-slate-800 rounded-xl p-3 text-center">
-        <div id="dfsStatFlights" class="text-2xl font-bold text-emerald-600">50</div>
+        <div id="dfsStatFlights" class="text-2xl font-bold text-emerald-600">83</div>
         <div class="text-xs text-slate-500 mt-0.5">Total flight legs</div>
       </div>
       <div class="bg-slate-50 dark:bg-slate-800 rounded-xl p-3 text-center">
-        <div id="dfsStatSJ" class="text-2xl font-bold text-indigo-600">36</div>
+        <div id="dfsStatSJ" class="text-2xl font-bold text-indigo-600">69</div>
         <div class="text-xs text-slate-500 mt-0.5">Flight SJ</div>
       </div>
       <div class="bg-slate-50 dark:bg-slate-800 rounded-xl p-3 text-center">
@@ -1953,7 +1953,7 @@
     </div>
     <div class="flex flex-col sm:flex-row gap-2 mb-4">
       <input type="text" id="dfsSearch" placeholder="🔍 Cari flight / route / tanggal..." class="input text-sm flex-1">
-      <select id="dfsFilterDate" class="input text-sm" style="min-width:160px"><option value="">Semua Tanggal</option><option value="04 JUN 2026">04-Jun-2026</option><option value="Thursday">Thursday</option></select>
+      <select id="dfsFilterDate" class="input text-sm" style="min-width:160px"><option value="">Semua Tanggal</option><option value="03 JUN 2026">03-Jun-2026</option><option value="04 JUN 2026">04-Jun-2026</option><option value="Thursday">Thursday</option></select>
       <select id="dfsFilterAirline" class="input text-sm">
         <option value="">SJ + IN</option>
         <option value="SJ">Sriwijaya (SJ)</option>
@@ -1974,6 +1974,402 @@
           </tr>
         </thead>
         <tbody id="dfsTableBody" class="divide-y divide-slate-200 dark:divide-slate-700">
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="px-3 py-2 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">03-Jun-2026</td>
+        <td class="px-3 py-2 font-mono font-bold text-sm text-blue-700 dark:text-blue-400">SJ054</td>
+        <td class="px-3 py-2 font-mono text-sm">CGK-TJQ</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-blue-700 dark:text-blue-400">23:00</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">06:00 (WIB)</td>
+        <td class="px-3 py-2 text-xs text-slate-500">CRH</td>
+        <td class="px-3 py-2 text-center">
+          <button onclick="dfsApplyToInput({&quot;date&quot;:&quot;03 JUN 2026&quot;,&quot;ac_reg&quot;:&quot;CRH&quot;,&quot;flight&quot;:&quot;SJ054&quot;,&quot;origin&quot;:&quot;CGK&quot;,&quot;dest&quot;:&quot;TJQ&quot;,&quot;route&quot;:&quot;CGKTJQ&quot;,&quot;std_utc&quot;:&quot;23:00&quot;,&quot;std_wib&quot;:&quot;06:00&quot;,&quot;source&quot;:&quot;DFS SJ 03-Jun-2026.xlsx&quot;})" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition">Pakai</button>
+        </td>
+      </tr>
+    
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="px-3 py-2 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">03-Jun-2026</td>
+        <td class="px-3 py-2 font-mono font-bold text-sm text-blue-700 dark:text-blue-400">SJ055</td>
+        <td class="px-3 py-2 font-mono text-sm">TJQ-CGK</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-blue-700 dark:text-blue-400">00:50</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">07:50 (WIB)</td>
+        <td class="px-3 py-2 text-xs text-slate-500">CRH</td>
+        <td class="px-3 py-2 text-center">
+          <button onclick="dfsApplyToInput({&quot;date&quot;:&quot;03 JUN 2026&quot;,&quot;ac_reg&quot;:&quot;CRH&quot;,&quot;flight&quot;:&quot;SJ055&quot;,&quot;origin&quot;:&quot;TJQ&quot;,&quot;dest&quot;:&quot;CGK&quot;,&quot;route&quot;:&quot;TJQCGK&quot;,&quot;std_utc&quot;:&quot;00:50&quot;,&quot;std_wib&quot;:&quot;07:50&quot;,&quot;source&quot;:&quot;DFS SJ 03-Jun-2026.xlsx&quot;})" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition">Pakai</button>
+        </td>
+      </tr>
+    
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="px-3 py-2 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">03-Jun-2026</td>
+        <td class="px-3 py-2 font-mono font-bold text-sm text-blue-700 dark:text-blue-400">SJ072</td>
+        <td class="px-3 py-2 font-mono text-sm">CGK-PGK</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-blue-700 dark:text-blue-400">02:40</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">09:40 (WIB)</td>
+        <td class="px-3 py-2 text-xs text-slate-500">CRH</td>
+        <td class="px-3 py-2 text-center">
+          <button onclick="dfsApplyToInput({&quot;date&quot;:&quot;03 JUN 2026&quot;,&quot;ac_reg&quot;:&quot;CRH&quot;,&quot;flight&quot;:&quot;SJ072&quot;,&quot;origin&quot;:&quot;CGK&quot;,&quot;dest&quot;:&quot;PGK&quot;,&quot;route&quot;:&quot;CGKPGK&quot;,&quot;std_utc&quot;:&quot;02:40&quot;,&quot;std_wib&quot;:&quot;09:40&quot;,&quot;source&quot;:&quot;DFS SJ 03-Jun-2026.xlsx&quot;})" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition">Pakai</button>
+        </td>
+      </tr>
+    
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="px-3 py-2 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">03-Jun-2026</td>
+        <td class="px-3 py-2 font-mono font-bold text-sm text-blue-700 dark:text-blue-400">SJ073</td>
+        <td class="px-3 py-2 font-mono text-sm">PGK-CGK</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-blue-700 dark:text-blue-400">04:35</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">11:35 (WIB)</td>
+        <td class="px-3 py-2 text-xs text-slate-500">CRH</td>
+        <td class="px-3 py-2 text-center">
+          <button onclick="dfsApplyToInput({&quot;date&quot;:&quot;03 JUN 2026&quot;,&quot;ac_reg&quot;:&quot;CRH&quot;,&quot;flight&quot;:&quot;SJ073&quot;,&quot;origin&quot;:&quot;PGK&quot;,&quot;dest&quot;:&quot;CGK&quot;,&quot;route&quot;:&quot;PGKCGK&quot;,&quot;std_utc&quot;:&quot;04:35&quot;,&quot;std_wib&quot;:&quot;11:35&quot;,&quot;source&quot;:&quot;DFS SJ 03-Jun-2026.xlsx&quot;})" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition">Pakai</button>
+        </td>
+      </tr>
+    
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="px-3 py-2 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">03-Jun-2026</td>
+        <td class="px-3 py-2 font-mono font-bold text-sm text-blue-700 dark:text-blue-400">SJ184</td>
+        <td class="px-3 py-2 font-mono text-sm">CGK-PNK</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-blue-700 dark:text-blue-400">06:25</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">13:25 (WIB)</td>
+        <td class="px-3 py-2 text-xs text-slate-500">CRH</td>
+        <td class="px-3 py-2 text-center">
+          <button onclick="dfsApplyToInput({&quot;date&quot;:&quot;03 JUN 2026&quot;,&quot;ac_reg&quot;:&quot;CRH&quot;,&quot;flight&quot;:&quot;SJ184&quot;,&quot;origin&quot;:&quot;CGK&quot;,&quot;dest&quot;:&quot;PNK&quot;,&quot;route&quot;:&quot;CGKPNK&quot;,&quot;std_utc&quot;:&quot;06:25&quot;,&quot;std_wib&quot;:&quot;13:25&quot;,&quot;source&quot;:&quot;DFS SJ 03-Jun-2026.xlsx&quot;})" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition">Pakai</button>
+        </td>
+      </tr>
+    
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="px-3 py-2 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">03-Jun-2026</td>
+        <td class="px-3 py-2 font-mono font-bold text-sm text-blue-700 dark:text-blue-400">SJ185</td>
+        <td class="px-3 py-2 font-mono text-sm">PNK-CGK</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-blue-700 dark:text-blue-400">08:35</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">15:35 (WIB)</td>
+        <td class="px-3 py-2 text-xs text-slate-500">CRH</td>
+        <td class="px-3 py-2 text-center">
+          <button onclick="dfsApplyToInput({&quot;date&quot;:&quot;03 JUN 2026&quot;,&quot;ac_reg&quot;:&quot;CRH&quot;,&quot;flight&quot;:&quot;SJ185&quot;,&quot;origin&quot;:&quot;PNK&quot;,&quot;dest&quot;:&quot;CGK&quot;,&quot;route&quot;:&quot;PNKCGK&quot;,&quot;std_utc&quot;:&quot;08:35&quot;,&quot;std_wib&quot;:&quot;15:35&quot;,&quot;source&quot;:&quot;DFS SJ 03-Jun-2026.xlsx&quot;})" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition">Pakai</button>
+        </td>
+      </tr>
+    
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="px-3 py-2 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">03-Jun-2026</td>
+        <td class="px-3 py-2 font-mono font-bold text-sm text-blue-700 dark:text-blue-400">SJ538</td>
+        <td class="px-3 py-2 font-mono text-sm">UPG-MOH</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-blue-700 dark:text-blue-400">02:00</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">10:00 (WITA)</td>
+        <td class="px-3 py-2 text-xs text-slate-500">CLE</td>
+        <td class="px-3 py-2 text-center">
+          <button onclick="dfsApplyToInput({&quot;date&quot;:&quot;03 JUN 2026&quot;,&quot;ac_reg&quot;:&quot;CLE&quot;,&quot;flight&quot;:&quot;SJ538&quot;,&quot;origin&quot;:&quot;UPG&quot;,&quot;dest&quot;:&quot;MOH&quot;,&quot;route&quot;:&quot;UPGMOH&quot;,&quot;std_utc&quot;:&quot;02:00&quot;,&quot;std_wib&quot;:&quot;09:00&quot;,&quot;source&quot;:&quot;DFS SJ 03-Jun-2026.xlsx&quot;})" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition">Pakai</button>
+        </td>
+      </tr>
+    
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="px-3 py-2 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">03-Jun-2026</td>
+        <td class="px-3 py-2 font-mono font-bold text-sm text-blue-700 dark:text-blue-400">SJ539</td>
+        <td class="px-3 py-2 font-mono text-sm">MOH-UPG</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-blue-700 dark:text-blue-400">03:40</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">11:40 (WITA)</td>
+        <td class="px-3 py-2 text-xs text-slate-500">CLE</td>
+        <td class="px-3 py-2 text-center">
+          <button onclick="dfsApplyToInput({&quot;date&quot;:&quot;03 JUN 2026&quot;,&quot;ac_reg&quot;:&quot;CLE&quot;,&quot;flight&quot;:&quot;SJ539&quot;,&quot;origin&quot;:&quot;MOH&quot;,&quot;dest&quot;:&quot;UPG&quot;,&quot;route&quot;:&quot;MOHUPG&quot;,&quot;std_utc&quot;:&quot;03:40&quot;,&quot;std_wib&quot;:&quot;10:40&quot;,&quot;source&quot;:&quot;DFS SJ 03-Jun-2026.xlsx&quot;})" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition">Pakai</button>
+        </td>
+      </tr>
+    
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="px-3 py-2 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">03-Jun-2026</td>
+        <td class="px-3 py-2 font-mono font-bold text-sm text-blue-700 dark:text-blue-400">SJ562</td>
+        <td class="px-3 py-2 font-mono text-sm">SUB-UPG</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-blue-700 dark:text-blue-400">13:05</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">20:05 (WIB)</td>
+        <td class="px-3 py-2 text-xs text-slate-500">CLH</td>
+        <td class="px-3 py-2 text-center">
+          <button onclick="dfsApplyToInput({&quot;date&quot;:&quot;03 JUN 2026&quot;,&quot;ac_reg&quot;:&quot;CLH&quot;,&quot;flight&quot;:&quot;SJ562&quot;,&quot;origin&quot;:&quot;SUB&quot;,&quot;dest&quot;:&quot;UPG&quot;,&quot;route&quot;:&quot;SUBUPG&quot;,&quot;std_utc&quot;:&quot;13:05&quot;,&quot;std_wib&quot;:&quot;20:05&quot;,&quot;source&quot;:&quot;DFS SJ 03-Jun-2026.xlsx&quot;})" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition">Pakai</button>
+        </td>
+      </tr>
+    
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="px-3 py-2 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">03-Jun-2026</td>
+        <td class="px-3 py-2 font-mono font-bold text-sm text-blue-700 dark:text-blue-400">SJ567</td>
+        <td class="px-3 py-2 font-mono text-sm">UPG-SUB</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-blue-700 dark:text-blue-400">10:50</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">18:50 (WITA)</td>
+        <td class="px-3 py-2 text-xs text-slate-500">CLH</td>
+        <td class="px-3 py-2 text-center">
+          <button onclick="dfsApplyToInput({&quot;date&quot;:&quot;03 JUN 2026&quot;,&quot;ac_reg&quot;:&quot;CLH&quot;,&quot;flight&quot;:&quot;SJ567&quot;,&quot;origin&quot;:&quot;UPG&quot;,&quot;dest&quot;:&quot;SUB&quot;,&quot;route&quot;:&quot;UPGSUB&quot;,&quot;std_utc&quot;:&quot;10:50&quot;,&quot;std_wib&quot;:&quot;17:50&quot;,&quot;source&quot;:&quot;DFS SJ 03-Jun-2026.xlsx&quot;})" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition">Pakai</button>
+        </td>
+      </tr>
+    
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="px-3 py-2 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">03-Jun-2026</td>
+        <td class="px-3 py-2 font-mono font-bold text-sm text-blue-700 dark:text-blue-400">SJ580</td>
+        <td class="px-3 py-2 font-mono text-sm">CGK-UPG</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-blue-700 dark:text-blue-400">07:25</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">14:25 (WIB)</td>
+        <td class="px-3 py-2 text-xs text-slate-500">CLH</td>
+        <td class="px-3 py-2 text-center">
+          <button onclick="dfsApplyToInput({&quot;date&quot;:&quot;03 JUN 2026&quot;,&quot;ac_reg&quot;:&quot;CLH&quot;,&quot;flight&quot;:&quot;SJ580&quot;,&quot;origin&quot;:&quot;CGK&quot;,&quot;dest&quot;:&quot;UPG&quot;,&quot;route&quot;:&quot;CGKUPG&quot;,&quot;std_utc&quot;:&quot;07:25&quot;,&quot;std_wib&quot;:&quot;14:25&quot;,&quot;source&quot;:&quot;DFS SJ 03-Jun-2026.xlsx&quot;})" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition">Pakai</button>
+        </td>
+      </tr>
+    
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="px-3 py-2 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">03-Jun-2026</td>
+        <td class="px-3 py-2 font-mono font-bold text-sm text-blue-700 dark:text-blue-400">SJ581</td>
+        <td class="px-3 py-2 font-mono text-sm">UPG-CGK</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-blue-700 dark:text-blue-400">04:10</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">12:10 (WITA)</td>
+        <td class="px-3 py-2 text-xs text-slate-500">CLH</td>
+        <td class="px-3 py-2 text-center">
+          <button onclick="dfsApplyToInput({&quot;date&quot;:&quot;03 JUN 2026&quot;,&quot;ac_reg&quot;:&quot;CLH&quot;,&quot;flight&quot;:&quot;SJ581&quot;,&quot;origin&quot;:&quot;UPG&quot;,&quot;dest&quot;:&quot;CGK&quot;,&quot;route&quot;:&quot;UPGCGK&quot;,&quot;std_utc&quot;:&quot;04:10&quot;,&quot;std_wib&quot;:&quot;11:10&quot;,&quot;source&quot;:&quot;DFS SJ 03-Jun-2026.xlsx&quot;})" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition">Pakai</button>
+        </td>
+      </tr>
+    
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="px-3 py-2 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">03-Jun-2026</td>
+        <td class="px-3 py-2 font-mono font-bold text-sm text-blue-700 dark:text-blue-400">SJ588</td>
+        <td class="px-3 py-2 font-mono text-sm">UPG-TIM</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-blue-700 dark:text-blue-400">19:10</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">03:10 (WITA)</td>
+        <td class="px-3 py-2 text-xs text-slate-500">BBF</td>
+        <td class="px-3 py-2 text-center">
+          <button onclick="dfsApplyToInput({&quot;date&quot;:&quot;03 JUN 2026&quot;,&quot;ac_reg&quot;:&quot;BBF&quot;,&quot;flight&quot;:&quot;SJ588&quot;,&quot;origin&quot;:&quot;UPG&quot;,&quot;dest&quot;:&quot;TIM&quot;,&quot;route&quot;:&quot;UPGTIM&quot;,&quot;std_utc&quot;:&quot;19:10&quot;,&quot;std_wib&quot;:&quot;02:10&quot;,&quot;source&quot;:&quot;DFS SJ 03-Jun-2026.xlsx&quot;})" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition">Pakai</button>
+        </td>
+      </tr>
+    
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="px-3 py-2 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">03-Jun-2026</td>
+        <td class="px-3 py-2 font-mono font-bold text-sm text-blue-700 dark:text-blue-400">SJ589</td>
+        <td class="px-3 py-2 font-mono text-sm">TIM-UPG</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-blue-700 dark:text-blue-400">03:20</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">12:20 (WIT)</td>
+        <td class="px-3 py-2 text-xs text-slate-500">BBF</td>
+        <td class="px-3 py-2 text-center">
+          <button onclick="dfsApplyToInput({&quot;date&quot;:&quot;03 JUN 2026&quot;,&quot;ac_reg&quot;:&quot;BBF&quot;,&quot;flight&quot;:&quot;SJ589&quot;,&quot;origin&quot;:&quot;TIM&quot;,&quot;dest&quot;:&quot;UPG&quot;,&quot;route&quot;:&quot;TIMUPG&quot;,&quot;std_utc&quot;:&quot;03:20&quot;,&quot;std_wib&quot;:&quot;10:20&quot;,&quot;source&quot;:&quot;DFS SJ 03-Jun-2026.xlsx&quot;})" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition">Pakai</button>
+        </td>
+      </tr>
+    
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="px-3 py-2 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">03-Jun-2026</td>
+        <td class="px-3 py-2 font-mono font-bold text-sm text-blue-700 dark:text-blue-400">SJ593</td>
+        <td class="px-3 py-2 font-mono text-sm">UPG-CGK</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-blue-700 dark:text-blue-400">10:00</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">18:00 (WITA)</td>
+        <td class="px-3 py-2 text-xs text-slate-500">CLE</td>
+        <td class="px-3 py-2 text-center">
+          <button onclick="dfsApplyToInput({&quot;date&quot;:&quot;03 JUN 2026&quot;,&quot;ac_reg&quot;:&quot;CLE&quot;,&quot;flight&quot;:&quot;SJ593&quot;,&quot;origin&quot;:&quot;UPG&quot;,&quot;dest&quot;:&quot;CGK&quot;,&quot;route&quot;:&quot;UPGCGK&quot;,&quot;std_utc&quot;:&quot;10:00&quot;,&quot;std_wib&quot;:&quot;17:00&quot;,&quot;source&quot;:&quot;DFS SJ 03-Jun-2026.xlsx&quot;})" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition">Pakai</button>
+        </td>
+      </tr>
+    
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="px-3 py-2 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">03-Jun-2026</td>
+        <td class="px-3 py-2 font-mono font-bold text-sm text-blue-700 dark:text-blue-400">SJ594</td>
+        <td class="px-3 py-2 font-mono text-sm">CGK-UPG</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-blue-700 dark:text-blue-400">21:30</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">04:30 (WIB)</td>
+        <td class="px-3 py-2 text-xs text-slate-500">CLE</td>
+        <td class="px-3 py-2 text-center">
+          <button onclick="dfsApplyToInput({&quot;date&quot;:&quot;03 JUN 2026&quot;,&quot;ac_reg&quot;:&quot;CLE&quot;,&quot;flight&quot;:&quot;SJ594&quot;,&quot;origin&quot;:&quot;CGK&quot;,&quot;dest&quot;:&quot;UPG&quot;,&quot;route&quot;:&quot;CGKUPG&quot;,&quot;std_utc&quot;:&quot;21:30&quot;,&quot;std_wib&quot;:&quot;04:30&quot;,&quot;source&quot;:&quot;DFS SJ 03-Jun-2026.xlsx&quot;})" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition">Pakai</button>
+        </td>
+      </tr>
+    
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="px-3 py-2 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">03-Jun-2026</td>
+        <td class="px-3 py-2 font-mono font-bold text-sm text-blue-700 dark:text-blue-400">SJ599</td>
+        <td class="px-3 py-2 font-mono text-sm">UPG-CGK</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-blue-700 dark:text-blue-400">07:10</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">15:10 (WITA)</td>
+        <td class="px-3 py-2 text-xs text-slate-500">BBF</td>
+        <td class="px-3 py-2 text-center">
+          <button onclick="dfsApplyToInput({&quot;date&quot;:&quot;03 JUN 2026&quot;,&quot;ac_reg&quot;:&quot;BBF&quot;,&quot;flight&quot;:&quot;SJ599&quot;,&quot;origin&quot;:&quot;UPG&quot;,&quot;dest&quot;:&quot;CGK&quot;,&quot;route&quot;:&quot;UPGCGK&quot;,&quot;std_utc&quot;:&quot;07:10&quot;,&quot;std_wib&quot;:&quot;14:10&quot;,&quot;source&quot;:&quot;DFS SJ 03-Jun-2026.xlsx&quot;})" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition">Pakai</button>
+        </td>
+      </tr>
+    
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="px-3 py-2 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">03-Jun-2026</td>
+        <td class="px-3 py-2 font-mono font-bold text-sm text-blue-700 dark:text-blue-400">SJ692</td>
+        <td class="px-3 py-2 font-mono text-sm">TTE-MDC</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-blue-700 dark:text-blue-400">22:10</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">07:10 (WIT)</td>
+        <td class="px-3 py-2 text-xs text-slate-500">CLH</td>
+        <td class="px-3 py-2 text-center">
+          <button onclick="dfsApplyToInput({&quot;date&quot;:&quot;03 JUN 2026&quot;,&quot;ac_reg&quot;:&quot;CLH&quot;,&quot;flight&quot;:&quot;SJ692&quot;,&quot;origin&quot;:&quot;TTE&quot;,&quot;dest&quot;:&quot;MDC&quot;,&quot;route&quot;:&quot;TTEMDC&quot;,&quot;std_utc&quot;:&quot;22:10&quot;,&quot;std_wib&quot;:&quot;05:10&quot;,&quot;source&quot;:&quot;DFS SJ 03-Jun-2026.xlsx&quot;})" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition">Pakai</button>
+        </td>
+      </tr>
+    
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="px-3 py-2 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">03-Jun-2026</td>
+        <td class="px-3 py-2 font-mono font-bold text-sm text-blue-700 dark:text-blue-400">SJ693</td>
+        <td class="px-3 py-2 font-mono text-sm">MDC-TTE</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-blue-700 dark:text-blue-400">23:45</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">07:45 (WITA)</td>
+        <td class="px-3 py-2 text-xs text-slate-500">CLH</td>
+        <td class="px-3 py-2 text-center">
+          <button onclick="dfsApplyToInput({&quot;date&quot;:&quot;03 JUN 2026&quot;,&quot;ac_reg&quot;:&quot;CLH&quot;,&quot;flight&quot;:&quot;SJ693&quot;,&quot;origin&quot;:&quot;MDC&quot;,&quot;dest&quot;:&quot;TTE&quot;,&quot;route&quot;:&quot;MDCTTE&quot;,&quot;std_utc&quot;:&quot;23:45&quot;,&quot;std_wib&quot;:&quot;06:45&quot;,&quot;source&quot;:&quot;DFS SJ 03-Jun-2026.xlsx&quot;})" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition">Pakai</button>
+        </td>
+      </tr>
+    
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="px-3 py-2 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">03-Jun-2026</td>
+        <td class="px-3 py-2 font-mono font-bold text-sm text-blue-700 dark:text-blue-400">SJ698</td>
+        <td class="px-3 py-2 font-mono text-sm">UPG-TTE</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-blue-700 dark:text-blue-400">19:30</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">03:30 (WITA)</td>
+        <td class="px-3 py-2 text-xs text-slate-500">CLH</td>
+        <td class="px-3 py-2 text-center">
+          <button onclick="dfsApplyToInput({&quot;date&quot;:&quot;03 JUN 2026&quot;,&quot;ac_reg&quot;:&quot;CLH&quot;,&quot;flight&quot;:&quot;SJ698&quot;,&quot;origin&quot;:&quot;UPG&quot;,&quot;dest&quot;:&quot;TTE&quot;,&quot;route&quot;:&quot;UPGTTE&quot;,&quot;std_utc&quot;:&quot;19:30&quot;,&quot;std_wib&quot;:&quot;02:30&quot;,&quot;source&quot;:&quot;DFS SJ 03-Jun-2026.xlsx&quot;})" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition">Pakai</button>
+        </td>
+      </tr>
+    
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="px-3 py-2 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">03-Jun-2026</td>
+        <td class="px-3 py-2 font-mono font-bold text-sm text-blue-700 dark:text-blue-400">SJ699</td>
+        <td class="px-3 py-2 font-mono text-sm">TTE-UPG</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-blue-700 dark:text-blue-400">01:20</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">10:20 (WIT)</td>
+        <td class="px-3 py-2 text-xs text-slate-500">CLH</td>
+        <td class="px-3 py-2 text-center">
+          <button onclick="dfsApplyToInput({&quot;date&quot;:&quot;03 JUN 2026&quot;,&quot;ac_reg&quot;:&quot;CLH&quot;,&quot;flight&quot;:&quot;SJ699&quot;,&quot;origin&quot;:&quot;TTE&quot;,&quot;dest&quot;:&quot;UPG&quot;,&quot;route&quot;:&quot;TTEUPG&quot;,&quot;std_utc&quot;:&quot;01:20&quot;,&quot;std_wib&quot;:&quot;08:20&quot;,&quot;source&quot;:&quot;DFS SJ 03-Jun-2026.xlsx&quot;})" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition">Pakai</button>
+        </td>
+      </tr>
+    
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="px-3 py-2 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">03-Jun-2026</td>
+        <td class="px-3 py-2 font-mono font-bold text-sm text-blue-700 dark:text-blue-400">SJ712</td>
+        <td class="px-3 py-2 font-mono text-sm">UPG-YIA</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-blue-700 dark:text-blue-400">10:00</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">18:00 (WITA)</td>
+        <td class="px-3 py-2 text-xs text-slate-500">CLF</td>
+        <td class="px-3 py-2 text-center">
+          <button onclick="dfsApplyToInput({&quot;date&quot;:&quot;03 JUN 2026&quot;,&quot;ac_reg&quot;:&quot;CLF&quot;,&quot;flight&quot;:&quot;SJ712&quot;,&quot;origin&quot;:&quot;UPG&quot;,&quot;dest&quot;:&quot;YIA&quot;,&quot;route&quot;:&quot;UPGYIA&quot;,&quot;std_utc&quot;:&quot;10:00&quot;,&quot;std_wib&quot;:&quot;17:00&quot;,&quot;source&quot;:&quot;DFS SJ 03-Jun-2026.xlsx&quot;})" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition">Pakai</button>
+        </td>
+      </tr>
+    
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="px-3 py-2 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">03-Jun-2026</td>
+        <td class="px-3 py-2 font-mono font-bold text-sm text-blue-700 dark:text-blue-400">SJ713</td>
+        <td class="px-3 py-2 font-mono text-sm">YIA-UPG</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-blue-700 dark:text-blue-400">12:35</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">19:35 (WIB)</td>
+        <td class="px-3 py-2 text-xs text-slate-500">CLF</td>
+        <td class="px-3 py-2 text-center">
+          <button onclick="dfsApplyToInput({&quot;date&quot;:&quot;03 JUN 2026&quot;,&quot;ac_reg&quot;:&quot;CLF&quot;,&quot;flight&quot;:&quot;SJ713&quot;,&quot;origin&quot;:&quot;YIA&quot;,&quot;dest&quot;:&quot;UPG&quot;,&quot;route&quot;:&quot;YIAUPG&quot;,&quot;std_utc&quot;:&quot;12:35&quot;,&quot;std_wib&quot;:&quot;19:35&quot;,&quot;source&quot;:&quot;DFS SJ 03-Jun-2026.xlsx&quot;})" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition">Pakai</button>
+        </td>
+      </tr>
+    
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="px-3 py-2 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">03-Jun-2026</td>
+        <td class="px-3 py-2 font-mono font-bold text-sm text-blue-700 dark:text-blue-400">SJ716</td>
+        <td class="px-3 py-2 font-mono text-sm">UPG-DPS</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-blue-700 dark:text-blue-400">05:35</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">13:35 (WITA)</td>
+        <td class="px-3 py-2 text-xs text-slate-500">CLE</td>
+        <td class="px-3 py-2 text-center">
+          <button onclick="dfsApplyToInput({&quot;date&quot;:&quot;03 JUN 2026&quot;,&quot;ac_reg&quot;:&quot;CLE&quot;,&quot;flight&quot;:&quot;SJ716&quot;,&quot;origin&quot;:&quot;UPG&quot;,&quot;dest&quot;:&quot;DPS&quot;,&quot;route&quot;:&quot;UPGDPS&quot;,&quot;std_utc&quot;:&quot;05:35&quot;,&quot;std_wib&quot;:&quot;12:35&quot;,&quot;source&quot;:&quot;DFS SJ 03-Jun-2026.xlsx&quot;})" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition">Pakai</button>
+        </td>
+      </tr>
+    
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="px-3 py-2 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">03-Jun-2026</td>
+        <td class="px-3 py-2 font-mono font-bold text-sm text-blue-700 dark:text-blue-400">SJ717</td>
+        <td class="px-3 py-2 font-mono text-sm">DPS-UPG</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-blue-700 dark:text-blue-400">07:40</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">15:40 (WITA)</td>
+        <td class="px-3 py-2 text-xs text-slate-500">CLE</td>
+        <td class="px-3 py-2 text-center">
+          <button onclick="dfsApplyToInput({&quot;date&quot;:&quot;03 JUN 2026&quot;,&quot;ac_reg&quot;:&quot;CLE&quot;,&quot;flight&quot;:&quot;SJ717&quot;,&quot;origin&quot;:&quot;DPS&quot;,&quot;dest&quot;:&quot;UPG&quot;,&quot;route&quot;:&quot;DPSUPG&quot;,&quot;std_utc&quot;:&quot;07:40&quot;,&quot;std_wib&quot;:&quot;14:40&quot;,&quot;source&quot;:&quot;DFS SJ 03-Jun-2026.xlsx&quot;})" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition">Pakai</button>
+        </td>
+      </tr>
+    
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="px-3 py-2 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">03-Jun-2026</td>
+        <td class="px-3 py-2 font-mono font-bold text-sm text-blue-700 dark:text-blue-400">SJ788</td>
+        <td class="px-3 py-2 font-mono text-sm">TIM-DJJ</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-blue-700 dark:text-blue-400">22:50</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">07:50 (WIT)</td>
+        <td class="px-3 py-2 text-xs text-slate-500">BBF</td>
+        <td class="px-3 py-2 text-center">
+          <button onclick="dfsApplyToInput({&quot;date&quot;:&quot;03 JUN 2026&quot;,&quot;ac_reg&quot;:&quot;BBF&quot;,&quot;flight&quot;:&quot;SJ788&quot;,&quot;origin&quot;:&quot;TIM&quot;,&quot;dest&quot;:&quot;DJJ&quot;,&quot;route&quot;:&quot;TIMDJJ&quot;,&quot;std_utc&quot;:&quot;22:50&quot;,&quot;std_wib&quot;:&quot;05:50&quot;,&quot;source&quot;:&quot;DFS SJ 03-Jun-2026.xlsx&quot;})" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition">Pakai</button>
+        </td>
+      </tr>
+    
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="px-3 py-2 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">03-Jun-2026</td>
+        <td class="px-3 py-2 font-mono font-bold text-sm text-blue-700 dark:text-blue-400">SJ789</td>
+        <td class="px-3 py-2 font-mono text-sm">DJJ-TIM</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-blue-700 dark:text-blue-400">01:10</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">10:10 (WIT)</td>
+        <td class="px-3 py-2 text-xs text-slate-500">BBF</td>
+        <td class="px-3 py-2 text-center">
+          <button onclick="dfsApplyToInput({&quot;date&quot;:&quot;03 JUN 2026&quot;,&quot;ac_reg&quot;:&quot;BBF&quot;,&quot;flight&quot;:&quot;SJ789&quot;,&quot;origin&quot;:&quot;DJJ&quot;,&quot;dest&quot;:&quot;TIM&quot;,&quot;route&quot;:&quot;DJJTIM&quot;,&quot;std_utc&quot;:&quot;01:10&quot;,&quot;std_wib&quot;:&quot;08:10&quot;,&quot;source&quot;:&quot;DFS SJ 03-Jun-2026.xlsx&quot;})" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition">Pakai</button>
+        </td>
+      </tr>
+    
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="px-3 py-2 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">03-Jun-2026</td>
+        <td class="px-3 py-2 font-mono font-bold text-sm text-blue-700 dark:text-blue-400">SJ900</td>
+        <td class="px-3 py-2 font-mono text-sm">UPG-NBX</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-blue-700 dark:text-blue-400">19:15</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">03:15 (WITA)</td>
+        <td class="px-3 py-2 text-xs text-slate-500">CLF</td>
+        <td class="px-3 py-2 text-center">
+          <button onclick="dfsApplyToInput({&quot;date&quot;:&quot;03 JUN 2026&quot;,&quot;ac_reg&quot;:&quot;CLF&quot;,&quot;flight&quot;:&quot;SJ900&quot;,&quot;origin&quot;:&quot;UPG&quot;,&quot;dest&quot;:&quot;NBX&quot;,&quot;route&quot;:&quot;UPGNBX&quot;,&quot;std_utc&quot;:&quot;19:15&quot;,&quot;std_wib&quot;:&quot;02:15&quot;,&quot;source&quot;:&quot;DFS SJ 03-Jun-2026.xlsx&quot;})" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition">Pakai</button>
+        </td>
+      </tr>
+    
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="px-3 py-2 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">03-Jun-2026</td>
+        <td class="px-3 py-2 font-mono font-bold text-sm text-blue-700 dark:text-blue-400">SJ901</td>
+        <td class="px-3 py-2 font-mono text-sm">NBX-UPG</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-blue-700 dark:text-blue-400">02:30</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">11:30 (WIT)</td>
+        <td class="px-3 py-2 text-xs text-slate-500">CLF</td>
+        <td class="px-3 py-2 text-center">
+          <button onclick="dfsApplyToInput({&quot;date&quot;:&quot;03 JUN 2026&quot;,&quot;ac_reg&quot;:&quot;CLF&quot;,&quot;flight&quot;:&quot;SJ901&quot;,&quot;origin&quot;:&quot;NBX&quot;,&quot;dest&quot;:&quot;UPG&quot;,&quot;route&quot;:&quot;NBXUPG&quot;,&quot;std_utc&quot;:&quot;02:30&quot;,&quot;std_wib&quot;:&quot;09:30&quot;,&quot;source&quot;:&quot;DFS SJ 03-Jun-2026.xlsx&quot;})" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition">Pakai</button>
+        </td>
+      </tr>
+    
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="px-3 py-2 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">03-Jun-2026</td>
+        <td class="px-3 py-2 font-mono font-bold text-sm text-blue-700 dark:text-blue-400">SJ902</td>
+        <td class="px-3 py-2 font-mono text-sm">UPG-SOQ</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-blue-700 dark:text-blue-400">19:45</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">03:45 (WITA)</td>
+        <td class="px-3 py-2 text-xs text-slate-500">CLE</td>
+        <td class="px-3 py-2 text-center">
+          <button onclick="dfsApplyToInput({&quot;date&quot;:&quot;03 JUN 2026&quot;,&quot;ac_reg&quot;:&quot;CLE&quot;,&quot;flight&quot;:&quot;SJ902&quot;,&quot;origin&quot;:&quot;UPG&quot;,&quot;dest&quot;:&quot;SOQ&quot;,&quot;route&quot;:&quot;UPGSOQ&quot;,&quot;std_utc&quot;:&quot;19:45&quot;,&quot;std_wib&quot;:&quot;02:45&quot;,&quot;source&quot;:&quot;DFS SJ 03-Jun-2026.xlsx&quot;})" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition">Pakai</button>
+        </td>
+      </tr>
+    
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="px-3 py-2 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">03-Jun-2026</td>
+        <td class="px-3 py-2 font-mono font-bold text-sm text-blue-700 dark:text-blue-400">SJ903</td>
+        <td class="px-3 py-2 font-mono text-sm">SOQ-UPG</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-blue-700 dark:text-blue-400">22:45</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">07:45 (WIT)</td>
+        <td class="px-3 py-2 text-xs text-slate-500">CLE</td>
+        <td class="px-3 py-2 text-center">
+          <button onclick="dfsApplyToInput({&quot;date&quot;:&quot;03 JUN 2026&quot;,&quot;ac_reg&quot;:&quot;CLE&quot;,&quot;flight&quot;:&quot;SJ903&quot;,&quot;origin&quot;:&quot;SOQ&quot;,&quot;dest&quot;:&quot;UPG&quot;,&quot;route&quot;:&quot;SOQUPG&quot;,&quot;std_utc&quot;:&quot;22:45&quot;,&quot;std_wib&quot;:&quot;05:45&quot;,&quot;source&quot;:&quot;DFS SJ 03-Jun-2026.xlsx&quot;})" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition">Pakai</button>
+        </td>
+      </tr>
+    
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="px-3 py-2 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">03-Jun-2026</td>
+        <td class="px-3 py-2 font-mono font-bold text-sm text-blue-700 dark:text-blue-400">SJ906</td>
+        <td class="px-3 py-2 font-mono text-sm">NBX-DJJ</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-blue-700 dark:text-blue-400">22:45</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">07:45 (WIT)</td>
+        <td class="px-3 py-2 text-xs text-slate-500">CLF</td>
+        <td class="px-3 py-2 text-center">
+          <button onclick="dfsApplyToInput({&quot;date&quot;:&quot;03 JUN 2026&quot;,&quot;ac_reg&quot;:&quot;CLF&quot;,&quot;flight&quot;:&quot;SJ906&quot;,&quot;origin&quot;:&quot;NBX&quot;,&quot;dest&quot;:&quot;DJJ&quot;,&quot;route&quot;:&quot;NBXDJJ&quot;,&quot;std_utc&quot;:&quot;22:45&quot;,&quot;std_wib&quot;:&quot;05:45&quot;,&quot;source&quot;:&quot;DFS SJ 03-Jun-2026.xlsx&quot;})" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition">Pakai</button>
+        </td>
+      </tr>
+    
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="px-3 py-2 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">03-Jun-2026</td>
+        <td class="px-3 py-2 font-mono font-bold text-sm text-blue-700 dark:text-blue-400">SJ907</td>
+        <td class="px-3 py-2 font-mono text-sm">DJJ-NBX</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-blue-700 dark:text-blue-400">00:45</td>
+        <td class="px-3 py-2 font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">09:45 (WIT)</td>
+        <td class="px-3 py-2 text-xs text-slate-500">CLF</td>
+        <td class="px-3 py-2 text-center">
+          <button onclick="dfsApplyToInput({&quot;date&quot;:&quot;03 JUN 2026&quot;,&quot;ac_reg&quot;:&quot;CLF&quot;,&quot;flight&quot;:&quot;SJ907&quot;,&quot;origin&quot;:&quot;DJJ&quot;,&quot;dest&quot;:&quot;NBX&quot;,&quot;route&quot;:&quot;DJJNBX&quot;,&quot;std_utc&quot;:&quot;00:45&quot;,&quot;std_wib&quot;:&quot;07:45&quot;,&quot;source&quot;:&quot;DFS SJ 03-Jun-2026.xlsx&quot;})" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition">Pakai</button>
+        </td>
+      </tr>
+    
       <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
         <td class="px-3 py-2 text-xs text-slate-600 dark:text-slate-400 whitespace-nowrap">04-Jun-2026</td>
         <td class="px-3 py-2 font-mono font-bold text-sm text-blue-700 dark:text-blue-400">SJ054</td>
@@ -2582,7 +2978,7 @@
       </div>
     </div>
     <div class="flex flex-col sm:flex-row items-center justify-between gap-3 mt-3">
-      <p id="dfsPaginationInfo" class="text-sm text-slate-600 dark:text-slate-400">1–50 / 50 flight</p>
+      <p id="dfsPaginationInfo" class="text-sm text-slate-600 dark:text-slate-400">1–83 / 83 flight</p>
       <div id="dfsPaginationControls" class="flex gap-1 flex-wrap"><button disabled="" data-dfs-page="0" class="px-2.5 py-1.5 rounded-lg border text-xs disabled:opacity-40 hover:bg-slate-100 dark:hover:bg-slate-700">‹</button><button data-dfs-page="1" class="px-2.5 py-1.5 rounded-lg border text-xs bg-blue-600 text-white border-blue-600">1</button><button disabled="" data-dfs-page="2" class="px-2.5 py-1.5 rounded-lg border text-xs disabled:opacity-40 hover:bg-slate-100 dark:hover:bg-slate-700">›</button></div>
     </div>
     <p class="text-xs text-slate-400 mt-2">💡 Klik <b>Pakai</b> untuk otomatis mengisi Form Input. Di tab Input, ketik flight number untuk autocomplete dari DFS Bank.</p>
@@ -3969,18 +4365,18 @@ updateFlightHistory();
 // Refresh station times every 60s
 setInterval(()=>{ if(document.getElementById('tab-stations')?.classList.contains('active')) renderStations(); },60000);
 
-// PWA Service Worker inline
-if('serviceWorker' in navigator){
-  const swCode=`
-    const CACHE='sjnam-v4';
-    const URLS=['./'];
-    self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(URLS))));
-    self.addEventListener('fetch',e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request))));
-  `;
-  const blob=new Blob([swCode],{type:'application/javascript'});
-  const swUrl=URL.createObjectURL(blob);
-  navigator.serviceWorker.register(swUrl).catch(()=>{});
-}
+// PWA Service Worker inline - DINONAKTIFKAN untuk GitHub Pages (menghindari XLSX not defined)
+// if('serviceWorker' in navigator){
+//   const swCode=`
+//     const CACHE='sjnam-v4';
+//     const URLS=['./'];
+//     self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(URLS))));
+//     self.addEventListener('fetch',e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request))));
+//   `;
+//   const blob=new Blob([swCode],{type:'application/javascript'});
+//   const swUrl=URL.createObjectURL(blob);
+//   navigator.serviceWorker.register(swUrl).catch(()=>{});
+// }
 
 
 // =================================================================
