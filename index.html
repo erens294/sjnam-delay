@@ -1,22 +1,21 @@
 <!DOCTYPE html>
-<!-- saved from url=(0073)file:///C:/Users/Errens/Downloads/Perbaikan-bug-kalkulator-SJNAM-Pro.html -->
-<html lang="id" class="scroll-smooth"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html lang="id" class="scroll-smooth"><head><meta charset="UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <meta name="theme-color" content="#1d4ed8">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="SJNAM Delay">
-<link rel="manifest" href="data:application/json;charset=utf-8,{&quot;name&quot;:&quot;SJNAM Delay Pro v4&quot;,&quot;short_name&quot;:&quot;SJNAM&quot;,&quot;start_url&quot;:&quot;.&quot;,&quot;display&quot;:&quot;standalone&quot;,&quot;background_color&quot;:&quot;%231e293b&quot;,&quot;theme_color&quot;:&quot;%231d4ed8&quot;,&quot;icons&quot;:[{&quot;src&quot;:&quot;data:image/svg+xml,%3Csvg xmlns=&#39;http://www.w3.org/2000/svg&#39; viewBox=&#39;0 0 100 100&#39;%3E%3Crect width=&#39;100&#39; height=&#39;100&#39; rx=&#39;20&#39; fill=&#39;%231d4ed8&#39;/%3E%3Ctext y=&#39;.9em&#39; font-size=&#39;80&#39;%3E%E2%9C%88%EF%B8%8F%3C/text%3E%3C/svg%3E&quot;,&quot;sizes&quot;:&quot;192x192&quot;,&quot;type&quot;:&quot;image/svg+xml&quot;}]}">
+<!-- PWA manifest: create manifest.json separately for GitHub Pages -->
 <title>Calculator Delay SJNAM Pro v4</title>
-<script src="./index_files/saved_resource"></script>
+<script src="https://cdn.tailwindcss.com"></script>
 <script>tailwind.config={darkMode:'class'}</script>
-<script src="./index_files/chart.umd.min.js.download" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="./index_files/xlsx.full.min.js.download" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="./index_files/jspdf.umd.min.js.download" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="./index_files/jspdf.plugin.autotable.min.js.download" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com/">
-<link href="./index_files/css2" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--radius:12px;--blue:37,99,235;--accent:#2563eb}
 *{font-family:'Inter',sans-serif;box-sizing:border-box}
@@ -1953,7 +1952,7 @@
     </div>
     <div class="flex flex-col sm:flex-row gap-2 mb-4">
       <input type="text" id="dfsSearch" placeholder="🔍 Cari flight / route / tanggal..." class="input text-sm flex-1">
-      <select id="dfsFilterDate" class="input text-sm" style="min-width:160px"><option value="">Semua Tanggal</option><option value="03 JUN 2026">03-Jun-2026</option><option value="04 JUN 2026">04-Jun-2026</option><option value="Thursday">Thursday</option></select>
+      <select id="dfsFilterDate" class="input text-sm" style="min-width:160px"><option value="">Semua Tanggal</option></select>
       <select id="dfsFilterAirline" class="input text-sm">
         <option value="">SJ + IN</option>
         <option value="SJ">Sriwijaya (SJ)</option>
@@ -3175,7 +3174,7 @@ function updateClock(){
   const utcMs=now.getTime()+now.getTimezoneOffset()*60000;
   const wib=new Date(utcMs+7*3600000);
   const utc=new Date(utcMs);
-  const fmt=d=>d.toLocaleTimeString('id-ID',{hour12:false});
+  const fmt=d=>String(d.getUTCHours()).padStart(2,'0')+':'+String(d.getUTCMinutes()).padStart(2,'0')+':'+String(d.getUTCSeconds()).padStart(2,'0');
   $('#clockWib').textContent='WIB '+fmt(wib);
   $('#clockUtc').textContent='UTC '+fmt(utc);
 }
@@ -4228,13 +4227,13 @@ function renderStations(){
   const utcMs = now.getTime() + now.getTimezoneOffset()*60000;
   tbody.innerHTML=list.map(s=>{
     const local = new Date(utcMs + s.tz*3600000);
-    const timeStr = String(local.getUTCHours()).padStart(2,'0')+':'+String(local.getUTCMinutes()).padStart(2,'0');
+    const timeStr = String(local.getUTCHours()).padStart(2,'0')+':'+String(local.getUTCMinutes()).padStart(2,'0')+':'+String(local.getUTCSeconds()).padStart(2,'0');
     return `
     <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
       <td class="px-3 py-2.5 font-mono font-bold text-sm">${s.iata}</td>
       <td class="px-3 py-2.5 text-sm">${s.name}</td>
       <td class="px-3 py-2.5"><span class="badge ${s.tz===7?'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300':s.tz===8?'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300':'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300'}">UTC+${s.tz}</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300">${timeStr}</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300" data-station-tz="${s.tz}">${timeStr}</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="${s.iata}" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="${s.iata}" class="text-red-600 hover:underline text-xs">Hapus</button>
@@ -4363,7 +4362,19 @@ updatePreviews();
 updateFlightHistory();
 
 // Refresh station times every 60s
-setInterval(()=>{ if(document.getElementById('tab-stations')?.classList.contains('active')) renderStations(); },60000);
+// Update Station TIME NOW every second
+function updateStationClocks(){
+  const now = new Date();
+  const utcMs = now.getTime() + now.getTimezoneOffset()*60000;
+  const cells = document.querySelectorAll('[data-station-tz]');
+  cells.forEach(cell => {
+    const tz = parseInt(cell.dataset.stationTz);
+    const local = new Date(utcMs + tz*3600000);
+    cell.textContent = String(local.getUTCHours()).padStart(2,'0')+':'+String(local.getUTCMinutes()).padStart(2,'0')+':'+String(local.getUTCSeconds()).padStart(2,'0');
+  });
+}
+setInterval(updateStationClocks, 1000);
+setInterval(()=>{ if(document.getElementById('tab-stations')?.classList.contains('active')) renderStations(); },300000);
 
 // PWA Service Worker inline - DINONAKTIFKAN untuk GitHub Pages (menghindari XLSX not defined)
 // if('serviceWorker' in navigator){
@@ -4724,10 +4735,12 @@ function parseDfsExcel(file){
           return null;
         }
         
-        function wibToUtc(wib){
+        // DFS Excel STD column is in local time (WIB = UTC+7). Convert to UTC.
+        function wibToUtc(wib, offsetMin){
           if(!wib) return null;
+          offsetMin = offsetMin || 420; // default WIB = UTC+7
           const [h,m] = wib.split(':').map(Number);
-          let t = h*60+m-420; if(t<0) t+=1440; if(t>=1440) t-=1440;
+          let t = h*60+m-offsetMin; if(t<0) t+=1440; if(t>=1440) t-=1440;
           return String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0');
         }
         
@@ -4789,6 +4802,13 @@ function parseDfsExcel(file){
 $('#dfsFileInput').addEventListener('change', async(e)=>{
   const files = Array.from(e.target.files);
   if(!files.length) return;
+  
+  // Guard: pastikan XLSX library sudah load
+  if(typeof XLSX === 'undefined'){
+    showToast('Library XLSX belum siap. Refresh halaman dan coba lagi.','error');
+    e.target.value='';
+    return;
+  }
   
   const statusEl = $('#dfsUploadStatus');
   statusEl.classList.remove('hidden');
