@@ -89,6 +89,7 @@
         <span id="clockWib" class="text-white font-semibold">WIB 15.05.39</span>
         <span id="clockUtc" class="text-blue-200 opacity-90">UTC 08.05.39</span>
       </div>
+      <button id="btnHeaderCloudSync" title="Simpan ke Cloud (Alt+S)" class="w-9 h-9 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition text-base" onclick="cloudPush()">☁️</button>
       <button id="btnDarkToggle" class="w-9 h-9 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition">
         <svg id="iconDark" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
         <svg id="iconLight" class="hidden" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
@@ -3017,12 +3018,76 @@
         <button id="btnResetDb" class="w-full px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white font-medium rounded-xl transition">⚠️ Reset Database</button>
       </div>
       <div class="mt-5 pt-4 border-t border-slate-200 dark:border-slate-700 text-sm space-y-1.5 text-slate-600 dark:text-slate-400">
-        <div class="flex justify-between"><span class="font-medium">Versi:</span><span>v4.0 Pro</span></div>
-        <div class="flex justify-between"><span class="font-medium">Storage:</span><span>localStorage + IndexedDB</span></div>
+        <div class="flex justify-between"><span class="font-medium">Versi:</span><span>v4.1 Pro + Cloud Sync</span></div>
+        <div class="flex justify-between"><span class="font-medium">Storage:</span><span>localStorage + Cloud Sync</span></div>
         <div class="flex justify-between"><span class="font-medium">Total Data:</span><span id="settingsTotalData">0 record</span></div>
-        <p class="text-xs mt-2 pt-2 border-t border-slate-100 dark:border-slate-700">Dikembangkan untuk operasional SJNAM • Tanpa backend</p>
+        <p class="text-xs mt-2 pt-2 border-t border-slate-100 dark:border-slate-700">Dikembangkan untuk operasional SJNAM • Cloud Sync via JSONBin.io</p>
       </div>
     </div>
+
+    <!-- CLOUD SYNC CARD -->
+    <div class="card p-5 lg:col-span-2">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-9 h-9 rounded-xl bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-lg">☁️</div>
+        <div>
+          <h3 class="font-bold text-lg">Cloud Sync — Sinkronisasi Antar Device</h3>
+          <p class="text-xs text-slate-500">Data tersimpan di cloud, bisa diakses dari Laptop & HP secara bersamaan</p>
+        </div>
+        <div class="ml-auto flex items-center gap-2">
+          <span id="syncStatusDot" class="w-2.5 h-2.5 rounded-full bg-slate-300"></span>
+          <span id="syncStatusText" class="text-xs font-medium text-slate-500">Belum terhubung</span>
+        </div>
+      </div>
+
+      <!-- Step-by-step setup guide -->
+      <div id="cloudSetupGuide" class="mb-5 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl text-sm">
+        <p class="font-semibold text-blue-700 dark:text-blue-300 mb-3">📋 Cara Setup (1x saja, gratis):</p>
+        <ol class="space-y-2 text-blue-700 dark:text-blue-300">
+          <li class="flex gap-2"><span class="font-bold">1.</span><span>Daftar gratis di <a href="https://jsonbin.io" target="_blank" class="underline font-semibold hover:text-blue-900">jsonbin.io</a></span></li>
+          <li class="flex gap-2"><span class="font-bold">2.</span><span>Setelah login, klik <strong>API Keys</strong> → copy <strong>Master Key</strong> (dimulai dengan <code class="bg-blue-100 dark:bg-blue-900 px-1 rounded">$2b$...</code>)</span></li>
+          <li class="flex gap-2"><span class="font-bold">3.</span><span>Paste di kolom <strong>API Key</strong> di bawah → klik <strong>Simpan & Buat Bin</strong></span></li>
+          <li class="flex gap-2"><span class="font-bold">4.</span><span>Lakukan hal yang sama di HP — masukkan API Key yang sama → data otomatis sync ✅</span></li>
+        </ol>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div>
+          <label class="block text-sm font-medium mb-1.5">API Key JSONBin.io</label>
+          <input type="password" id="cloudApiKey" placeholder="$2b$10$xxxx..." class="input font-mono text-xs" autocomplete="off">
+          <p class="text-xs text-slate-400 mt-1">Tersimpan lokal di browser Anda saja, tidak dikirim ke mana pun selain JSONBin</p>
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1.5">Bin ID <span class="text-slate-400 font-normal">(otomatis terisi setelah setup)</span></label>
+          <input type="text" id="cloudBinId" placeholder="6xxxxxxxxxxxxxxxxx" class="input font-mono text-xs" autocomplete="off">
+          <p class="text-xs text-slate-400 mt-1">Salin Bin ID yang sama ke semua device Anda</p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-2 mb-4">
+        <button id="btnCloudSave" class="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-xl transition flex items-center gap-2">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+          Simpan & Buat Bin
+        </button>
+        <button id="btnCloudLoad" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-xl transition flex items-center gap-2">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 11l3 3m0 0l3-3m-3 3V3"/></svg>
+          Ambil Data dari Cloud
+        </button>
+        <button id="btnCloudAutoToggle" class="px-4 py-2.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 text-sm font-semibold rounded-xl transition flex items-center gap-2" title="Auto-sync setiap kali data berubah">
+          <span id="autoSyncIcon">🔁</span>
+          <span id="autoSyncLabel">Auto-Sync: OFF</span>
+        </button>
+        <button id="btnCloudClear" class="px-4 py-2.5 bg-red-100 hover:bg-red-200 text-red-700 text-sm font-semibold rounded-xl transition">🗑 Hapus Config</button>
+      </div>
+
+      <div id="cloudLog" class="hidden p-3 bg-slate-50 dark:bg-slate-800 rounded-xl text-xs font-mono text-slate-600 dark:text-slate-300 max-h-28 overflow-y-auto space-y-1"></div>
+
+      <div class="mt-4 p-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl text-xs text-amber-700 dark:text-amber-300">
+        <strong>⚠️ Info:</strong> JSONBin.io gratis untuk hingga <strong>10.000 request/bulan</strong>. 
+        Data yang tersimpan: Delay records, DFS Bank, dan Stations. 
+        API Key Anda hanya tersimpan di browser ini (localStorage), tidak pernah kami kirim ke server lain.
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -4308,6 +4373,7 @@ $('#btnResetDb').addEventListener('click',async()=>{
 document.addEventListener('keydown',e=>{
   if(e.ctrlKey&&e.key==='s'){e.preventDefault();$('#btnSimpan').click();}
   if(e.ctrlKey&&e.key==='n'){e.preventDefault();resetForm();switchTab('input');}
+  if(e.altKey&&e.key==='s'){e.preventDefault();cloudPush();}
 });
 
 // =================================================================
@@ -4892,6 +4958,248 @@ $('#btnDfsClearAll').addEventListener('click', async()=>{
 
 renderDfsTable();
 
+
+// =================================================================
+// ☁️ CLOUD SYNC — JSONBin.io
+// =================================================================
+const CLOUD_KEY = 'sjn_cloud_config_v1';
+let cloudConfig = { apiKey: '', binId: '', autoSync: false };
+try { const c = JSON.parse(localStorage.getItem(CLOUD_KEY)||'{}'); cloudConfig = {...cloudConfig, ...c}; } catch(e){}
+
+function saveCloudConfig(){ localStorage.setItem(CLOUD_KEY, JSON.stringify(cloudConfig)); }
+
+function cloudLog(msg, type='info'){
+  const logEl = $('#cloudLog');
+  if(!logEl) return;
+  logEl.classList.remove('hidden');
+  const line = document.createElement('div');
+  const ts = new Date().toLocaleTimeString('id-ID',{hour12:false});
+  line.className = type==='error' ? 'text-red-500' : type==='success' ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400';
+  line.textContent = `[${ts}] ${msg}`;
+  logEl.prepend(line);
+  // Keep max 20 lines
+  while(logEl.children.length > 20) logEl.removeChild(logEl.lastChild);
+}
+
+function updateSyncStatus(status){
+  const dot = $('#syncStatusDot');
+  const txt = $('#syncStatusText');
+  if(!dot || !txt) return;
+  if(status === 'connected'){
+    dot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-500';
+    txt.textContent = 'Terhubung';
+    txt.className = 'text-xs font-medium text-emerald-600 dark:text-emerald-400';
+  } else if(status === 'syncing'){
+    dot.className = 'w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse';
+    txt.textContent = 'Sinkronisasi...';
+    txt.className = 'text-xs font-medium text-blue-600 dark:text-blue-400';
+  } else if(status === 'error'){
+    dot.className = 'w-2.5 h-2.5 rounded-full bg-red-500';
+    txt.textContent = 'Gagal';
+    txt.className = 'text-xs font-medium text-red-500';
+  } else {
+    dot.className = 'w-2.5 h-2.5 rounded-full bg-slate-300';
+    txt.textContent = 'Belum terhubung';
+    txt.className = 'text-xs font-medium text-slate-500';
+  }
+}
+
+function getAllCloudData(){
+  return { data, stations, dfsData, settings, savedAt: new Date().toISOString(), version: 'v4.1' };
+}
+
+// UPLOAD ke JSONBin (create or update)
+async function cloudPush(silent=false){
+  const apiKey = cloudConfig.apiKey.trim();
+  if(!apiKey){ if(!silent) showToast('Masukkan API Key dulu','error'); return false; }
+  
+  updateSyncStatus('syncing');
+  try {
+    const payload = getAllCloudData();
+    
+    if(cloudConfig.binId){
+      // UPDATE existing bin
+      const res = await fetch(`https://api.jsonbin.io/v3/b/${cloudConfig.binId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'X-Master-Key': apiKey },
+        body: JSON.stringify(payload)
+      });
+      if(!res.ok) throw new Error('HTTP '+res.status+' '+res.statusText);
+      const json = await res.json();
+      updateSyncStatus('connected');
+      cloudLog('✅ Data tersimpan ke cloud ('+data.length+' delay, '+dfsData.length+' DFS)', 'success');
+      if(!silent) showToast('☁️ Cloud Sync berhasil! ('+data.length+' records)','success');
+      saveCloudConfig();
+      return true;
+    } else {
+      // CREATE new bin
+      const res = await fetch('https://api.jsonbin.io/v3/b', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Master-Key': apiKey,
+          'X-Bin-Name': 'SJNAM-Pro-Data',
+          'X-Collection-Name': 'SJNAM'
+        },
+        body: JSON.stringify(payload)
+      });
+      if(!res.ok) throw new Error('HTTP '+res.status+' — Cek API Key Anda');
+      const json = await res.json();
+      cloudConfig.binId = json.metadata.id;
+      saveCloudConfig();
+      if($('#cloudBinId')) $('#cloudBinId').value = cloudConfig.binId;
+      updateSyncStatus('connected');
+      cloudLog('🆕 Bin baru dibuat! ID: '+cloudConfig.binId, 'success');
+      cloudLog('✅ Data tersimpan ke cloud ('+data.length+' delay, '+dfsData.length+' DFS)', 'success');
+      showToast('☁️ Bin baru dibuat & data tersimpan!','success');
+      // Show guide to hide after first success
+      const guide = $('#cloudSetupGuide');
+      if(guide) guide.classList.add('hidden');
+      saveCloudConfig();
+      return true;
+    }
+  } catch(err){
+    updateSyncStatus('error');
+    cloudLog('❌ Gagal upload: '+err.message, 'error');
+    if(!silent) showToast('Cloud Sync gagal: '+err.message,'error');
+    return false;
+  }
+}
+
+// DOWNLOAD dari JSONBin
+async function cloudPull(){
+  const apiKey = cloudConfig.apiKey.trim();
+  const binId = cloudConfig.binId.trim();
+  if(!apiKey){ showToast('Masukkan API Key dulu','error'); return; }
+  if(!binId){ showToast('Bin ID kosong. Lakukan Simpan & Buat Bin dulu.','error'); return; }
+  
+  updateSyncStatus('syncing');
+  try {
+    const res = await fetch(`https://api.jsonbin.io/v3/b/${binId}/latest`, {
+      headers: { 'X-Master-Key': apiKey }
+    });
+    if(!res.ok) throw new Error('HTTP '+res.status+' — Cek API Key / Bin ID');
+    const json = await res.json();
+    const payload = json.record;
+    
+    const ok = await showConfirm('☁️ Ambil Data dari Cloud', 
+      `Data cloud: ${(payload.data||[]).length} delay records, ${(payload.dfsData||[]).length} DFS, disimpan ${payload.savedAt ? new Date(payload.savedAt).toLocaleString('id-ID') : '-'}.
+
+Data lokal saat ini akan DIGANTI. Lanjutkan?`
+    );
+    if(!ok) { updateSyncStatus(cloudConfig.binId ? 'connected' : 'disconnected'); return; }
+    
+    if(Array.isArray(payload.data)) { data = payload.data; saveData(); }
+    if(Array.isArray(payload.stations) && payload.stations.length > 0) { stations = payload.stations; saveStations(); }
+    if(Array.isArray(payload.dfsData)) { dfsData = payload.dfsData; saveDfsData(); }
+    if(payload.settings) { settings = {...settings, ...payload.settings}; saveSettings(); applyDarkMode(); }
+    
+    renderTable();
+    renderDashboard();
+    renderStations();
+    renderDfsTable();
+    
+    updateSyncStatus('connected');
+    cloudLog('✅ Data berhasil diambil dari cloud ('+data.length+' delay, '+dfsData.length+' DFS)', 'success');
+    showToast('☁️ Data cloud berhasil dimuat! ('+data.length+' records)','success');
+  } catch(err){
+    updateSyncStatus('error');
+    cloudLog('❌ Gagal download: '+err.message, 'error');
+    showToast('Gagal ambil data cloud: '+err.message,'error');
+  }
+}
+
+// Auto-sync: patch saveData, saveStations, saveDfsData
+const _origSaveData = saveData;
+const _origSaveStations = saveStations;
+const _origSaveDfsData = saveDfsData;
+let _autoSyncTimer = null;
+function triggerAutoSync(){
+  if(!cloudConfig.autoSync || !cloudConfig.apiKey || !cloudConfig.binId) return;
+  clearTimeout(_autoSyncTimer);
+  _autoSyncTimer = setTimeout(()=>cloudPush(true), 3000); // debounce 3 detik
+}
+
+// Patch save functions to trigger auto-sync
+function saveData(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); triggerAutoSync(); }
+function saveStations(){ localStorage.setItem(STATIONS_KEY, JSON.stringify(stations)); triggerAutoSync(); }
+function saveDfsData(){ localStorage.setItem(DFS_KEY, JSON.stringify(dfsData)); triggerAutoSync(); }
+
+// Init UI dari config tersimpan
+function initCloudUI(){
+  if($('#cloudApiKey')) $('#cloudApiKey').value = cloudConfig.apiKey || '';
+  if($('#cloudBinId')) $('#cloudBinId').value = cloudConfig.binId || '';
+  updateAutoSyncBtn();
+  if(cloudConfig.apiKey && cloudConfig.binId){
+    updateSyncStatus('connected');
+    const guide = $('#cloudSetupGuide');
+    if(guide) guide.classList.add('hidden');
+  }
+}
+
+function updateAutoSyncBtn(){
+  const btn = $('#btnCloudAutoToggle');
+  const lbl = $('#autoSyncLabel');
+  if(!btn || !lbl) return;
+  if(cloudConfig.autoSync){
+    btn.className = 'px-4 py-2.5 bg-blue-600 text-white text-sm font-semibold rounded-xl transition flex items-center gap-2';
+    lbl.textContent = 'Auto-Sync: ON';
+  } else {
+    btn.className = 'px-4 py-2.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 text-sm font-semibold rounded-xl transition flex items-center gap-2';
+    lbl.textContent = 'Auto-Sync: OFF';
+  }
+}
+
+// EVENT LISTENERS
+$('#btnCloudSave').addEventListener('click', async()=>{
+  const apiKey = $('#cloudApiKey').value.trim();
+  const binId = $('#cloudBinId').value.trim();
+  if(!apiKey){ showToast('API Key tidak boleh kosong','error'); return; }
+  cloudConfig.apiKey = apiKey;
+  if(binId) cloudConfig.binId = binId;
+  saveCloudConfig();
+  await cloudPush();
+});
+
+$('#btnCloudLoad').addEventListener('click', async()=>{
+  const apiKey = $('#cloudApiKey').value.trim();
+  const binId = $('#cloudBinId').value.trim();
+  if(!apiKey){ showToast('API Key tidak boleh kosong','error'); return; }
+  if(!binId){ showToast('Bin ID kosong. Lakukan Simpan dulu dari device pertama.','error'); return; }
+  cloudConfig.apiKey = apiKey;
+  cloudConfig.binId = binId;
+  saveCloudConfig();
+  await cloudPull();
+});
+
+$('#btnCloudAutoToggle').addEventListener('click', ()=>{
+  cloudConfig.autoSync = !cloudConfig.autoSync;
+  saveCloudConfig();
+  updateAutoSyncBtn();
+  const msg = cloudConfig.autoSync ? '🔁 Auto-Sync aktif — data otomatis tersimpan ke cloud' : 'Auto-Sync dimatikan';
+  showToast(msg, cloudConfig.autoSync ? 'success' : 'info');
+  cloudLog(msg);
+});
+
+$('#btnCloudClear').addEventListener('click', async()=>{
+  const ok = await showConfirm('Hapus Cloud Config','Hapus API Key dan Bin ID dari browser ini? Data cloud tidak terhapus.');
+  if(ok){
+    cloudConfig = { apiKey:'', binId:'', autoSync:false };
+    saveCloudConfig();
+    initCloudUI();
+    updateSyncStatus('disconnected');
+    showToast('Cloud config dihapus');
+    const guide = $('#cloudSetupGuide');
+    if(guide) guide.classList.remove('hidden');
+  }
+});
+
+// Input change → simpan ke config
+$('#cloudApiKey').addEventListener('change', e=>{ cloudConfig.apiKey = e.target.value.trim(); saveCloudConfig(); });
+$('#cloudBinId').addEventListener('change', e=>{ cloudConfig.binId = e.target.value.trim(); saveCloudConfig(); });
+
+// Jalankan init
+initCloudUI();
 
 console.log('[SJNAM Pro v5-DFS] Ready ✈️ | Ctrl+S Simpan | Ctrl+N Reset');
 </script>
