@@ -3203,8 +3203,13 @@ function formatHM(minutes){
   return `${sign}${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
 }
 
+// formatNumber: Safari iOS safe — fallback jika locale id-ID tidak didukung
+function formatNumber(n){
+  try { return parseInt(n||0).toLocaleString('id-ID'); }
+  catch(e){ return String(parseInt(n||0)).replace(/\B(?=(\d{3})+(?!\d))/g,'.'); }
+}
 function formatRupiah(val){
-  return 'Rp '+parseInt(val||0).toLocaleString('id-ID');
+  return 'Rp '+formatNumber(val);
 }
 
 function getStationTz(iata){
@@ -3296,6 +3301,19 @@ function updateClock(){
   $('#clockUtc').textContent='UTC '+fmt(utcH,utcM,utcS);
 }
 setInterval(updateClock,1000); updateClock();
+
+// iPhone Safari: setInterval dibekukan saat layar kunci/pindah app.
+// Resync langsung saat halaman kembali aktif (visibilitychange + pageshow).
+document.addEventListener('visibilitychange', function(){
+  if(document.visibilityState === 'visible'){
+    updateClock();
+    updateStationClocks();
+  }
+});
+window.addEventListener('pageshow', function(){
+  updateClock();
+  updateStationClocks();
+});
 
 // Online/offline indicator
 window.addEventListener('online',()=>$('#offlineBadge').classList.add('hidden'));
@@ -4038,7 +4056,7 @@ function renderDashboard(){
   // KPI Row 1
   $('#kpiTotal').textContent=totalFlight;
   $('#kpiTotalCost').textContent=totalCost>=1000000?`Rp ${(totalCost/1000000).toFixed(1)}jt`:formatRupiah(totalCost);
-  $('#kpiPax').textContent=totalPax.toLocaleString('id-ID');
+  $('#kpiPax').textContent=formatNumber(totalPax);
   $('#kpiCountDelay').textContent=delayCount;
   $('#kpiPostponed').textContent=postponedCount;
   $('#kpiCancel').textContent=cancelCount;
@@ -4160,7 +4178,7 @@ function renderDashboard(){
       <td class="px-3 py-2"><span class="badge bg-red-200 text-red-800 dark:bg-red-900/50 dark:text-red-200 font-bold">${formatHM(d.delayMenit)}</span></td>
       <td class="px-3 py-2"><span class="badge ${katBadge[d.kategori]||'bg-slate-100 text-slate-700'}">${d.kategori}</span></td>
       <td class="px-3 py-2"><span class="flight-status-badge ${sColor} text-xs">${d.flightStatus||'Delay Flight'}</span></td>
-      <td class="px-3 py-2 text-center text-xs">${(parseInt(d.qtyPax)||0).toLocaleString('id-ID')}</td>
+      <td class="px-3 py-2 text-center text-xs">${formatNumber(parseInt(d.qtyPax)||0)}</td>
       <td class="px-3 py-2 text-right text-xs font-medium text-purple-700 dark:text-purple-300">${formatRupiah(costVal)}</td>
     </tr>`;
   }).join('')||`<tr><td colspan="9" class="px-4 py-8 text-center text-slate-500">Belum ada data</td></tr>`;
@@ -4232,7 +4250,7 @@ $('#btnDashPdf').addEventListener('click', async ()=>{
     startY: 93,
     head:[['KPI','Nilai','KPI','Nilai']],
     body:[
-      ['✈️ Total Flight', filtered.length, '👥 Total Pax', totalPax.toLocaleString('id-ID')],
+      ['✈️ Total Flight', filtered.length, '👥 Total Pax', formatNumber(totalPax)],
       ['💰 Total Cost PM', totalCost>=1000000?`Rp ${(totalCost/1000000).toFixed(1)}jt`:formatRupiah(totalCost), '⏱️ Flight Delay', delayCount],
       ['📅 Flight Postponed', postponeCount, '❌ Flight Cancel', cancelCount],
       ['📊 OTP %', otp+'%', '⌛ Avg Delay', avgDelay+' menit'],
@@ -4319,14 +4337,14 @@ $('#btnDashPdf').addEventListener('click', async ()=>{
       head:[['Bulan','Flight','Pax','Total Delay','Total Cost PM']],
       body: sortedMonths.map(ym=>{
         const [y,m]=ym.split('-');
-        return [MONTH_NAMES[parseInt(m)-1]+' '+y, monthlyMap[ym].count, monthlyMap[ym].pax.toLocaleString('id-ID'), formatHM(monthlyMap[ym].delay), formatRupiah(monthlyMap[ym].cost)];
+        return [MONTH_NAMES[parseInt(m)-1]+' '+y, monthlyMap[ym].count, formatNumber(monthlyMap[ym].pax), formatHM(monthlyMap[ym].delay), formatRupiah(monthlyMap[ym].cost)];
       }),
       styles:{fontSize:9, cellPadding:5},
       headStyles:{fillColor:[29,78,216], textColor:255},
       columnStyles:{1:{halign:'center'},2:{halign:'right'},3:{halign:'right'},4:{halign:'right'}},
       margin:{left:margin, right:margin},
       alternateRowStyles:{fillColor:[248,250,252]},
-      foot:[['TOTAL', filtered.length, totalPax.toLocaleString('id-ID'), formatHM(totalDelayMin), formatRupiah(totalCost)]],
+      foot:[['TOTAL', filtered.length, formatNumber(totalPax), formatHM(totalDelayMin), formatRupiah(totalCost)]],
       footStyles:{fillColor:[30,58,138], textColor:255, fontStyle:'bold'}
     });
   }
