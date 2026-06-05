@@ -2283,6 +2283,10 @@ function getStationTz(iata){
   const s=stations.find(x=>x.iata===(iata||'').toUpperCase());
   return s?s.tz:7;
 }
+// Route parsing helpers (route stored as 6-char "UPGCGK" or with dash "UPG-CGK")
+function getRouteOrigin(route){ if(!route) return ''; route=route.replace('-',''); return route.slice(0,3).toUpperCase(); }
+function getRouteDest(route){ if(!route) return ''; route=route.replace('-',''); return route.slice(3,6).toUpperCase(); }
+
 
 function stationExists(iata){
   return stations.some(x=>x.iata===(iata||'').toUpperCase());
@@ -2834,7 +2838,7 @@ function renderTable(){
 
   tbody.innerHTML=pageData.map((d,i)=>{
     const no=start+i+1;
-    const origin=d.route.split('-')[0], dest=d.route.split('-')[1];
+    const origin=getRouteOrigin(d.route), dest=getRouteDest(d.route);
     const stdInfo=formatTimeLocal(d.stdUtc,origin);
     const etdInfo=formatTimeLocal(d.etdUtc,origin);
     // Delay Now = Waktu UTC sekarang - STD UTC (dalam menit)
@@ -2904,7 +2908,7 @@ function renderTable(){
   if(mobile){
     mobile.innerHTML=pageData.map((d,i)=>{
       const no=start+i+1;
-      const origin=d.route.split('-')[0];
+      const origin=getRouteOrigin(d.route);
       const stdInfo=formatTimeLocal(d.stdUtc,origin);
       const etdInfo=formatTimeLocal(d.etdUtc,origin);
       const delayColor=d.delayMenit>0?'text-red-600':'text-emerald-600';
@@ -3003,7 +3007,7 @@ $('#btnExportExcel').addEventListener('click',()=>{
   const filtered=getFilteredData();
   if(!filtered.length) return showToast('Tidak ada data','error');
   const rows = filtered.map((d,i)=>{
-    const origin = d.route.split('-')[0];
+    const origin = getRouteOrigin(d.route);
     const tz = getStationTz(origin);
     const tzName = tz===7?'WIB':tz===8?'WITA':'WIT';
     const toLocal = (iso)=>{
@@ -3052,7 +3056,7 @@ $('#btnExportPdf').addEventListener('click',()=>{
   doc.text(`Generated: ${new Date().toLocaleString('id-ID')} | Total: ${filtered.length} flight`,40,52);
   const toLocal = (iso, route)=>{
     if(!iso) return '-';
-    const origin = route.split('-')[0];
+    const origin = getRouteOrigin(route);
     const tz = getStationTz(origin);
     const dt = parseUTC(iso);
     const local = new Date(dt.getTime()+tz*3600000);
@@ -3128,14 +3132,10 @@ $('#dashAirlineFilter').addEventListener('change',renderDashboard);
 function renderDashboard(){
   const filtered=getDashboardData();
   const totalFlight=filtered.length;
-  const otpFlights=filtered.filter(d=>d.delayMenit<15).length;
-  const otp=totalFlight?Math.round((otpFlights/totalFlight)*100):0;
   const totalDelayMin=filtered.reduce((s,d)=>s+Math.max(0,d.delayMenit),0);
-  const avgDelay=totalFlight?Math.round(totalDelayMin/totalFlight):0;
   const totalPax=filtered.reduce((s,d)=>s+(parseInt(d.qtyPax)||0),0);
   const totalCost=filtered.reduce((s,d)=>s+(parseInt(d.qtyPax)||0)*(parseInt(d.costPerPax)||settings.costPerPax||300000),0);
-  const costPerMin=totalDelayMin?Math.round(totalCost/totalDelayMin):0;
-  const maxDelay=filtered.length?Math.max(...filtered.map(d=>d.delayMenit)):0;
+  const maxDelay=filtered.length?Math.max(...filtered.map(d=>d.delayMenit),0):0;
   const cancelCount=filtered.filter(d=>(d.flightStatus||'')===('Cancel Flight')).length;
   const postponedCount=filtered.filter(d=>(d.flightStatus||'')==='Postponed Flight').length;
   const delayCount=filtered.filter(d=>(d.flightStatus||'Delay Flight')==='Delay Flight').length;
@@ -3153,11 +3153,8 @@ function renderDashboard(){
   filtered.forEach(d=>{
     if(!d.tanggal) return;
     const ym=d.tanggal.slice(0,7);
-    if(!monthlyMap2[ym]) monthlyMap2[ym]={cost:0,delay:0,count:0,days:new Set()};
+    if(!monthlyMap2[ym]) monthlyMap2[ym]={cost:0};
     monthlyMap2[ym].cost+=(parseInt(d.qtyPax)||0)*(parseInt(d.costPerPax)||settings.costPerPax||300000);
-    monthlyMap2[ym].delay+=Math.max(0,d.delayMenit);
-    monthlyMap2[ym].count+=1;
-    monthlyMap2[ym].days.add(d.tanggal);
   });
   const numMonths=Object.keys(monthlyMap2).length||1;
   const avgDelayPerMonth=Math.round(totalDelayMin/numMonths);
@@ -3301,7 +3298,7 @@ function renderDashboard(){
   const routeDelays=allRoutes.map(r=>r.total);
   const routeColors=routeLabels.map((_,i)=>`hsl(${(i*47)%360},65%,55%)`);
   if(window._routeBarChart) window._routeBarChart.destroy();
-  if($('#chartRouteBar')){
+  if($('#chartRouteBar') && routeDelays.length>0){
     window._routeBarChart=new Chart($('#chartRouteBar'),{
       type:'bar',
       data:{labels:routeLabels,datasets:[{label:'Total Delay (menit)',data:routeDelays,backgroundColor:routeColors,borderRadius:5}]},
@@ -3329,7 +3326,7 @@ function renderDashboard(){
   const stationCosts=stationEntries.map(e=>e[1]);
   const stationColors=stationLabels.map((_,i)=>`hsl(${(i*67+200)%360},60%,55%)`);
   if(window._stationCostChart) window._stationCostChart.destroy();
-  if($('#chartCostStation')){
+  if($('#chartCostStation') && stationCosts.length>0){
     window._stationCostChart=new Chart($('#chartCostStation'),{
       type:'bar',
       data:{labels:stationLabels,datasets:[{label:'Total Cost PM (Rp)',data:stationCosts,backgroundColor:stationColors,borderRadius:5}]},
@@ -3350,7 +3347,7 @@ function renderDashboard(){
   const otherCost=totalCost-sjCost-inCost;
   const airlinePieData=[sjCost,inCost,otherCost].map(v=>Math.max(0,v));
   if(window._airlinesPieChart) window._airlinesPieChart.destroy();
-  if($('#chartCostAirlines')){
+  if($('#chartCostAirlines') && airlinePieData.some(v=>v>0)){
     window._airlinesPieChart=new Chart($('#chartCostAirlines'),{
       type:'pie',
       data:{
@@ -3396,24 +3393,7 @@ $('#btnDashPdf').addEventListener('click', async ()=>{
     const noprints = dashSection.querySelectorAll('.no-print');
     noprints.forEach(el=>el.style.display='none');
 
-    // Get all card elements in dashboard section
-    const allCards = Array.from(dashSection.querySelectorAll('.kpi-card, .card'));
-    // Instead capture the whole dashboard section in parts
-    // Capture each major block
-    const blocks = [
-      // KPI rows
-      dashSection.querySelector('.grid.grid-cols-2.sm\:grid-cols-3.xl\:grid-cols-6'),
-      dashSection.querySelector('.grid.grid-cols-2.sm\:grid-cols-4'),
-      // Charts row 1
-      ...Array.from(dashSection.querySelectorAll('.grid.grid-cols-1.lg\:grid-cols-2.gap-5')),
-      // Top 3 rank
-      ...Array.from(dashSection.querySelectorAll('.card.p-5.mb-5')),
-      // Route chart
-      dashSection.querySelector('.card.p-5:last-of-type')
-    ].filter(Boolean);
-
-    // Actually, easiest: capture the whole dashSection in sequential blocks
-    // Use a simpler approach: capture all direct children cards/grids
+    // Capture all direct children (grids and cards) of dashboard section, skipping filter bar
     const captureEls = Array.from(dashSection.children).filter(el => !el.classList.contains('no-print'));
     
     const bgColor = document.documentElement.classList.contains('dark') ? '#1e293b' : '#ffffff';
@@ -3467,7 +3447,7 @@ $('#btnDashExcel').addEventListener('click',()=>{
   const filtered=getDashboardData();
   if(!filtered.length) return showToast('Tidak ada data','error');
   const rows = filtered.map((d,i)=>{
-    const origin = d.route.split('-')[0];
+    const origin = getRouteOrigin(d.route);
     const tz = getStationTz(origin);
     const toLocal = (iso)=>{ if(!iso) return '-'; const dt=parseUTC(iso); const local=new Date(dt.getTime()+tz*3600000); return local.toISOString().substr(11,5); };
     return {
@@ -3486,16 +3466,23 @@ $('#btnDashExcel').addEventListener('click',()=>{
   XLSX.utils.book_append_sheet(wb,ws,'Dashboard');
 
   // KPI sheet
-  const totalDelayMin=filtered.reduce((s,d)=>s+Math.max(0,d.delayMenit),0);
+  const totalDelayMinX=filtered.reduce((s,d)=>s+Math.max(0,d.delayMenit),0);
   const totalPaxKpi=filtered.reduce((s,d)=>s+(parseInt(d.qtyPax)||0),0);
-  const otp=filtered.length?Math.round((filtered.filter(d=>d.delayMenit<15).length/filtered.length)*100):0;
   const totalCostKpi=filtered.reduce((s,d)=>s+(d.qtyPax||0)*(d.costPerPax||300000),0);
+  const monthlyMapX={};
+  filtered.forEach(d=>{ if(!d.tanggal) return; const ym=d.tanggal.slice(0,7); if(!monthlyMapX[ym]) monthlyMapX[ym]=0; monthlyMapX[ym]+=Math.max(0,d.delayMenit); });
+  const numMonthsX=Object.keys(monthlyMapX).length||1;
+  const allDaysX=new Set(filtered.map(d=>d.tanggal).filter(Boolean));
   const wsKpi=XLSX.utils.json_to_sheet([
     {KPI:'Total Flight',Nilai:filtered.length},
-    {KPI:'OTP %',Nilai:otp+'%'},
-    {KPI:'Avg Delay (menit)',Nilai:Math.round(totalDelayMin/(filtered.length||1))},
-    {KPI:'Delay/Pax (menit)',Nilai:totalPaxKpi?(totalDelayMin/totalPaxKpi).toFixed(1):'-'},
+    {KPI:'Avg Delay / Month (menit)',Nilai:Math.round(totalDelayMinX/numMonthsX)},
+    {KPI:'Delay Tertinggi',Nilai:filtered.length?Math.max(...filtered.map(d=>d.delayMenit)):0},
+    {KPI:'Cost / Month (Rp)',Nilai:Math.round(totalCostKpi/numMonthsX)},
+    {KPI:'Cost / Day (Rp)',Nilai:Math.round(totalCostKpi/(allDaysX.size||1))},
     {KPI:'Total Cost PM89 (Rp)',Nilai:totalCostKpi},
+    {KPI:'Total Pax',Nilai:totalPaxKpi},
+    {KPI:'Flight Delay',Nilai:filtered.filter(d=>(d.flightStatus||'Delay Flight')==='Delay Flight').length},
+    {KPI:'Flight Postponed',Nilai:filtered.filter(d=>d.flightStatus==='Postponed Flight').length},
     {KPI:'Flight Cancel',Nilai:filtered.filter(d=>d.flightStatus==='Cancel Flight').length},
   ]);
   XLSX.utils.book_append_sheet(wb,wsKpi,'KPI');
@@ -3508,7 +3495,7 @@ $('#btnDashExcel').addEventListener('click',()=>{
 // =================================================================
 function buildRequestText(d){
   if(!d) return 'Pilih data terlebih dahulu...';
-  const origin=d.route.split('-')[0], dest=d.route.split('-')[1];
+  const origin=getRouteOrigin(d.route), dest=getRouteDest(d.route);
   const stdInfo=formatTimeLocal(d.stdUtc,origin);
   const etdInfo=formatTimeLocal(d.etdUtc,origin);
   const namaPenerima=$('#reqNamaPenerima').value||'Bapak Achmad Yani';
