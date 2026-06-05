@@ -14,6 +14,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -4184,72 +4185,233 @@ function renderDashboard(){
 }
 
 // Dashboard PDF Export
-$('#btnDashPdf').addEventListener('click',()=>{
+$('#btnDashPdf').addEventListener('click', async ()=>{
   const filtered=getDashboardData();
   if(!filtered.length) return showToast('Tidak ada data','error');
-  const {jsPDF}=window.jspdf;
-  const doc=new jsPDF({orientation:'portrait',unit:'pt',format:'a4'});
-  const W=595;
-  // KOP
+
+  showToast('⏳ Menyiapkan PDF Dashboard…','info');
+
+  // Pastikan dashboard section terlihat (aktif)
+  const dashSection = document.getElementById('tab-dashboard');
+
+  // Elemen yang akan di-capture (semua konten dashboard kecuali tombol filter)
+  const kpiBlock = dashSection.querySelector('.grid.grid-cols-2.sm\\:grid-cols-3');
+  const fullDash = dashSection;
+
+  const {jsPDF} = window.jspdf;
+  const doc = new jsPDF({orientation:'portrait', unit:'pt', format:'a4'});
+  const W = 595, margin = 24;
+
+  // ── HEADER ──
   doc.setFillColor(29,78,216);
-  doc.rect(0,0,W,72,'F');
+  doc.rect(0,0,W,68,'F');
   doc.setTextColor(255,255,255);
-  doc.setFontSize(18); doc.setFont('helvetica','bold');
-  doc.text('LAPORAN OPERASIONAL DELAY — SJNAM Pro',W/2,28,{align:'center'});
-  doc.setFontSize(10); doc.setFont('helvetica','normal');
-  doc.text(`Periode: ${$('#dashFrom').value||'-'} s/d ${$('#dashTo').value||'-'}`,W/2,44,{align:'center'});
-  doc.text(`Generated: ${new Date().toLocaleString('id-ID')} | Total Flight: ${filtered.length}`,W/2,58,{align:'center'});
+  doc.setFontSize(16); doc.setFont('helvetica','bold');
+  doc.text('LAPORAN OPERASIONAL DELAY — SJNAM Pro v4', W/2, 26, {align:'center'});
+  doc.setFontSize(9); doc.setFont('helvetica','normal');
+  doc.text(`Periode: ${$('#dashFrom').value||'-'} s/d ${$('#dashTo').value||'-'}`, W/2, 42, {align:'center'});
+  doc.text(`Generated: ${new Date().toLocaleString('id-ID')} | Total Flight: ${filtered.length}`, W/2, 56, {align:'center'});
 
-  // KPI Table
+  // ── KPI TABLE (halaman 1) ──
+  const totalDelayMin = filtered.reduce((s,d)=>s+Math.max(0,d.delayMenit),0);
+  const totalPax      = filtered.reduce((s,d)=>s+(parseInt(d.qtyPax)||0),0);
+  const totalCost     = filtered.reduce((s,d)=>s+(parseInt(d.qtyPax)||0)*(parseInt(d.costPerPax)||settings.costPerPax||300000),0);
+  const otp           = filtered.length?Math.round((filtered.filter(d=>d.delayMenit<15).length/filtered.length)*100):0;
+  const avgDelay      = filtered.length?Math.round(totalDelayMin/filtered.length):0;
+  const maxDelay      = filtered.length?Math.max(...filtered.map(d=>d.delayMenit)):0;
+  const cancelCount   = filtered.filter(d=>(d.flightStatus||'')==='Cancel Flight').length;
+  const postponeCount = filtered.filter(d=>(d.flightStatus||'')==='Postponed Flight').length;
+  const delayCount    = filtered.filter(d=>(d.flightStatus||'Delay Flight')==='Delay Flight').length;
+  const costPerMin    = totalDelayMin?Math.round(totalCost/totalDelayMin):0;
+
   doc.setTextColor(30,41,59);
-  doc.setFontSize(12); doc.setFont('helvetica','bold');
-  doc.text('KEY PERFORMANCE INDICATOR',40,95);
-  const totalDelayMin=filtered.reduce((s,d)=>s+Math.max(0,d.delayMenit),0);
-  const totalPax=filtered.reduce((s,d)=>s+(parseInt(d.qtyPax)||0),0);
-  const otp=filtered.length?Math.round((filtered.filter(d=>d.delayMenit<15).length/filtered.length)*100):0;
-  const totalCost=filtered.reduce((s,d)=>s+(d.qtyPax||0)*(d.costPerPax||300000),0);
+  doc.setFontSize(11); doc.setFont('helvetica','bold');
+  doc.text('KEY PERFORMANCE INDICATOR', margin, 86);
+
   doc.autoTable({
-    startY:102,
-    head:[['KPI','Nilai']],
+    startY: 93,
+    head:[['KPI','Nilai','KPI','Nilai']],
     body:[
-      ['Total Flight',filtered.length],
-      ['OTP % (on-time <15 mnt)',otp+'%'],
-      ['Avg Delay per Flight',Math.round(totalDelayMin/(filtered.length||1))+' menit'],
-      ['Delay Menit per Pax',totalPax?(totalDelayMin/totalPax).toFixed(1)+' menit/pax':'-'],
-      ['Total Cost PM89',formatRupiah(totalCost)],
-      ['Flight Cancel',filtered.filter(d=>d.flightStatus==='Cancel Flight').length],
-      ['Delay Tertinggi',formatHM(filtered.length?Math.max(...filtered.map(d=>d.delayMenit)):0)],
+      ['✈️ Total Flight', filtered.length, '👥 Total Pax', totalPax.toLocaleString('id-ID')],
+      ['💰 Total Cost PM', totalCost>=1000000?`Rp ${(totalCost/1000000).toFixed(1)}jt`:formatRupiah(totalCost), '⏱️ Flight Delay', delayCount],
+      ['📅 Flight Postponed', postponeCount, '❌ Flight Cancel', cancelCount],
+      ['📊 OTP %', otp+'%', '⌛ Avg Delay', avgDelay+' menit'],
+      ['🔺 Delay Tertinggi', formatHM(maxDelay), '💸 Cost/Menit', formatRupiah(costPerMin)],
     ],
-    styles:{fontSize:9},
-    headStyles:{fillColor:[29,78,216]},
-    columnStyles:{0:{fontStyle:'bold'},1:{halign:'right'}},
-    margin:{left:40,right:40}
+    styles:{fontSize:9, cellPadding:5},
+    headStyles:{fillColor:[29,78,216], textColor:255, fontStyle:'bold'},
+    columnStyles:{0:{fontStyle:'bold',cellWidth:130},1:{halign:'right',cellWidth:100},2:{fontStyle:'bold',cellWidth:130},3:{halign:'right',cellWidth:100}},
+    margin:{left:margin, right:margin},
+    alternateRowStyles:{fillColor:[239,246,255]}
   });
 
-  const y2=doc.lastAutoTable.finalY+20;
-  doc.setFontSize(12); doc.setFont('helvetica','bold');
-  doc.text('DETAIL PENERBANGAN',40,y2);
-
+  // ── DISTRIBUSI KATEGORI ──
   const cats=['ATC','Teknik','Operasional','Cuaca','Lainnya'];
-  const catRows=cats.map(c=>({c,total:filtered.filter(d=>d.kategori===c).reduce((s,d)=>s+Math.max(0,d.delayMenit),0),count:filtered.filter(d=>d.kategori===c).length}));
-  doc.autoTable({
-    startY:y2+8,
-    head:[['Kategori','Jumlah Flight','Total Delay','Avg Delay']],
-    body:catRows.map(r=>[r.c,r.count,formatHM(r.total),formatHM(r.count?Math.round(r.total/r.count):0)]),
-    styles:{fontSize:9},
-    headStyles:{fillColor:[29,78,216]},
-    margin:{left:40,right:40}
+  const catRows=cats.map(c=>{
+    const flights=filtered.filter(d=>d.kategori===c);
+    const tot=flights.reduce((s,d)=>s+Math.max(0,d.delayMenit),0);
+    return [c, flights.length, formatHM(tot), formatHM(flights.length?Math.round(tot/flights.length):0)];
   });
 
-  // Signature area
-  const y3=doc.lastAutoTable.finalY+30;
-  doc.setFont('helvetica','normal'); doc.setFontSize(9);
-  doc.text('Mengetahui,',400,y3);
-  doc.text('_________________________',380,y3+40);
-  doc.text('Station Manager',397,y3+52);
+  const yKat = doc.lastAutoTable.finalY + 14;
+  doc.setFontSize(11); doc.setFont('helvetica','bold');
+  doc.text('DISTRIBUSI DELAY PER KATEGORI', margin, yKat);
+  doc.autoTable({
+    startY: yKat+6,
+    head:[['Kategori','Jumlah Flight','Total Delay','Avg Delay']],
+    body: catRows,
+    styles:{fontSize:9, cellPadding:5},
+    headStyles:{fillColor:[29,78,216], textColor:255},
+    columnStyles:{0:{fontStyle:'bold'},1:{halign:'center'},2:{halign:'right'},3:{halign:'right'}},
+    margin:{left:margin, right:margin},
+    alternateRowStyles:{fillColor:[248,250,252]}
+  });
+
+  // ── TOP 10 DELAY ──
+  const top10 = filtered.slice().sort((a,b)=>b.delayMenit-a.delayMenit).slice(0,10);
+  const yTop = doc.lastAutoTable.finalY + 14;
+  doc.setFontSize(11); doc.setFont('helvetica','bold');
+  doc.text('TOP 10 RANK DELAY TERTINGGI', margin, yTop);
+  doc.autoTable({
+    startY: yTop+6,
+    head:[['#','Tanggal','Flight','Route','Delay','Kategori','Status','Pax','Cost PM']],
+    body: top10.map((d,i)=>[
+      i+1,
+      formatDateDMY(d.tanggal),
+      d.flightNumber,
+      d.route,
+      formatHM(d.delayMenit),
+      d.kategori,
+      d.flightStatus||'Delay Flight',
+      (parseInt(d.qtyPax)||0),
+      formatRupiah((parseInt(d.qtyPax)||0)*(parseInt(d.costPerPax)||settings.costPerPax||300000))
+    ]),
+    styles:{fontSize:8, cellPadding:4},
+    headStyles:{fillColor:[29,78,216], textColor:255},
+    columnStyles:{0:{halign:'center',cellWidth:18},4:{halign:'center'},7:{halign:'right'},8:{halign:'right'}},
+    margin:{left:margin, right:margin},
+    alternateRowStyles:{fillColor:[248,250,252]}
+  });
+
+  // ── MONTHLY COST TABLE ──
+  const monthlyMap={};
+  filtered.forEach(d=>{
+    if(!d.tanggal) return;
+    const ym=d.tanggal.slice(0,7);
+    if(!monthlyMap[ym]) monthlyMap[ym]={cost:0,delay:0,count:0,pax:0};
+    monthlyMap[ym].cost+=(parseInt(d.qtyPax)||0)*(parseInt(d.costPerPax)||settings.costPerPax||300000);
+    monthlyMap[ym].delay+=Math.max(0,d.delayMenit);
+    monthlyMap[ym].count+=1;
+    monthlyMap[ym].pax+=(parseInt(d.qtyPax)||0);
+  });
+  const MONTH_NAMES=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const sortedMonths=Object.keys(monthlyMap).sort();
+
+  if(sortedMonths.length){
+    const yMon = doc.lastAutoTable.finalY + 14;
+    // Cek apakah perlu halaman baru
+    const pageH = 842;
+    const yStart = yMon > pageH - 100 ? (doc.addPage(), margin+20) : yMon;
+    doc.setFontSize(11); doc.setFont('helvetica','bold');
+    doc.text('TREN MONTHLY COST PM', margin, yStart);
+    doc.autoTable({
+      startY: yStart+6,
+      head:[['Bulan','Flight','Pax','Total Delay','Total Cost PM']],
+      body: sortedMonths.map(ym=>{
+        const [y,m]=ym.split('-');
+        return [MONTH_NAMES[parseInt(m)-1]+' '+y, monthlyMap[ym].count, monthlyMap[ym].pax.toLocaleString('id-ID'), formatHM(monthlyMap[ym].delay), formatRupiah(monthlyMap[ym].cost)];
+      }),
+      styles:{fontSize:9, cellPadding:5},
+      headStyles:{fillColor:[29,78,216], textColor:255},
+      columnStyles:{1:{halign:'center'},2:{halign:'right'},3:{halign:'right'},4:{halign:'right'}},
+      margin:{left:margin, right:margin},
+      alternateRowStyles:{fillColor:[248,250,252]},
+      foot:[['TOTAL', filtered.length, totalPax.toLocaleString('id-ID'), formatHM(totalDelayMin), formatRupiah(totalCost)]],
+      footStyles:{fillColor:[30,58,138], textColor:255, fontStyle:'bold'}
+    });
+  }
+
+  // ── CAPTURE CHARTS (halaman baru) ──
+  try {
+    // Capture area charts dari DOM
+    const chartArea = dashSection.querySelector('.grid.grid-cols-1.lg\\:grid-cols-2.gap-5.mb-5');
+    if(chartArea && typeof html2canvas !== 'undefined'){
+      doc.addPage();
+
+      // Header halaman chart
+      doc.setFillColor(29,78,216);
+      doc.rect(0,0,W,36,'F');
+      doc.setTextColor(255,255,255);
+      doc.setFontSize(12); doc.setFont('helvetica','bold');
+      doc.text('VISUALISASI GRAFIK DASHBOARD', W/2, 22, {align:'center'});
+
+      doc.setTextColor(30,41,59);
+      doc.setFontSize(9); doc.setFont('helvetica','normal');
+      doc.text(`Periode: ${$('#dashFrom').value||'-'} s/d ${$('#dashTo').value||'-'}`, margin, 50);
+
+      // Capture semua card chart pertama (Monthly Cost + Pie)
+      const allChartRows = dashSection.querySelectorAll('.grid.grid-cols-1.lg\\:grid-cols-2.gap-5.mb-5');
+      let yChart = 58;
+
+      for(const row of allChartRows){
+        const canvas = await html2canvas(row, {
+          scale: 1.5,
+          backgroundColor: document.documentElement.classList.contains('dark') ? '#1e293b' : '#ffffff',
+          logging: false,
+          useCORS: true
+        });
+        const imgData = canvas.toDataURL('image/jpeg', 0.92);
+        const imgW = W - margin*2;
+        const imgH = (canvas.height / canvas.width) * imgW;
+
+        if(yChart + imgH > 820){
+          doc.addPage();
+          yChart = margin;
+        }
+        doc.addImage(imgData, 'JPEG', margin, yChart, imgW, imgH);
+        yChart += imgH + 12;
+      }
+
+      // Capture tabel Top 10 dari DOM
+      const topDelaySection = dashSection.querySelector('.card.p-5.mb-5');
+      if(topDelaySection){
+        if(yChart + 80 > 820){ doc.addPage(); yChart = margin; }
+        const tblCanvas = await html2canvas(topDelaySection, {
+          scale:1.5,
+          backgroundColor: document.documentElement.classList.contains('dark') ? '#1e293b':'#ffffff',
+          logging:false
+        });
+        const tW=W-margin*2;
+        const tH=(tblCanvas.height/tblCanvas.width)*tW;
+        if(yChart + tH > 820){ doc.addPage(); yChart=margin; }
+        doc.addImage(tblCanvas.toDataURL('image/jpeg',0.9),'JPEG',margin,yChart,tW,tH);
+        yChart+=tH+12;
+      }
+    }
+  } catch(e){
+    console.warn('Chart capture failed, skipping visual page:', e);
+  }
+
+  // ── TTD ──
+  const pgCount = doc.getNumberOfPages();
+  doc.setPage(pgCount);
+  const finalY = doc.lastAutoTable ? doc.lastAutoTable.finalY+28 : 700;
+  const yTtd = Math.min(finalY, 760);
+  doc.setFont('helvetica','normal'); doc.setFontSize(9); doc.setTextColor(30,41,59);
+  doc.text('Mengetahui,', 400, yTtd);
+  doc.text('_________________________', 380, yTtd+44);
+  doc.text('Station Manager', 400, yTtd+56);
+
+  // Page numbers
+  const totalPages = doc.getNumberOfPages();
+  for(let i=1;i<=totalPages;i++){
+    doc.setPage(i);
+    doc.setFontSize(8); doc.setTextColor(148,163,184);
+    doc.text(`Halaman ${i} / ${totalPages}  |  SJNAM Pro v4  |  Confidential`, W/2, 832, {align:'center'});
+  }
 
   doc.save(`Dashboard_SJNAM_${new Date().toISOString().slice(0,10)}.pdf`);
-  showToast('Dashboard PDF diexport');
+  showToast('✅ Dashboard PDF berhasil diexport','success');
 });
 
 // Dashboard Excel Export
@@ -4395,27 +4557,23 @@ function renderStations(){
   let list=stations.slice().sort((a,b)=>a.iata.localeCompare(b.iata));
   if(search) list=list.filter(s=>s.iata.toLowerCase().includes(search)||s.name.toLowerCase().includes(search));
   $('#stationCount').textContent=stations.length+' station';
-  const now = new Date();
-  const utcH=now.getUTCHours(), utcM=now.getUTCMinutes(), utcS=now.getUTCSeconds();
-  const utcTotalSec = utcH*3600+utcM*60+utcS;
+
   tbody.innerHTML=list.map(s=>{
-    const localTotalSec = (utcTotalSec + s.tz*3600) % 86400;
-    const lH=Math.floor(localTotalSec/3600);
-    const lM=Math.floor((localTotalSec%3600)/60);
-    const lS=localTotalSec%60;
-    const timeStr=String(lH).padStart(2,'0')+':'+String(lM).padStart(2,'0')+':'+String(lS).padStart(2,'0');
     return `
     <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
       <td class="px-3 py-2.5 font-mono font-bold text-sm">${s.iata}</td>
       <td class="px-3 py-2.5 text-sm">${s.name}</td>
       <td class="px-3 py-2.5"><span class="badge ${s.tz===7?'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300':s.tz===8?'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300':'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300'}">UTC+${s.tz}</span></td>
-      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300" data-station-tz="${s.tz}">${timeStr}</td>
+      <td class="px-3 py-2.5 font-mono text-xs text-slate-600 dark:text-slate-300" data-station-tz="${s.tz}">--:--:--</td>
       <td class="px-3 py-2.5 text-center">
         <button data-st-edit="${s.iata}" class="text-blue-600 hover:underline text-xs mr-2">Edit</button>
         <button data-st-del="${s.iata}" class="text-red-600 hover:underline text-xs">Hapus</button>
       </td>
     </tr>
   `;}).join('')||`<tr><td colspan="5" class="py-8 text-center text-slate-500">Belum ada station</td></tr>`;
+
+  // Langsung update jam setelah render agar tidak ada jeda --:--:--
+  updateStationClocks();
 }
 
 $('#searchStation').addEventListener('input',renderStations);
@@ -5204,10 +5362,12 @@ Data lokal saat ini akan DIGANTI. Lanjutkan?`
     );
     if(!ok) { updateSyncStatus(cloudConfig.binId ? 'connected' : 'disconnected'); return; }
     
+    _cloudPullInProgress = true; // jangan trigger autoSync selama proses pull
     if(Array.isArray(payload.data)) { data = payload.data; saveData(); }
     if(Array.isArray(payload.stations) && payload.stations.length > 0) { stations = payload.stations; saveStations(); }
     if(Array.isArray(payload.dfsData)) { dfsData = payload.dfsData; saveDfsData(); }
     if(payload.settings) { settings = {...settings, ...payload.settings}; saveSettings(); applyDarkMode(); }
+    _cloudPullInProgress = false; // selesai pull, reset flag
     
     renderTable();
     renderDashboard();
@@ -5224,12 +5384,12 @@ Data lokal saat ini akan DIGANTI. Lanjutkan?`
   }
 }
 
-// Auto-sync: patch saveData, saveStations, saveDfsData
-const _origSaveData = saveData;
-const _origSaveStations = saveStations;
-const _origSaveDfsData = saveDfsData;
+// Auto-sync: patch saveData, saveStations, saveDfsData untuk trigger cloud sync otomatis
 let _autoSyncTimer = null;
+let _cloudPullInProgress = false; // flag untuk mencegah auto-push saat sedang pull
+
 function triggerAutoSync(){
+  if(_cloudPullInProgress) return; // jangan push saat sedang pull
   if(!cloudConfig.autoSync || !cloudConfig.apiKey || !cloudConfig.binId) return;
   clearTimeout(_autoSyncTimer);
   _autoSyncTimer = setTimeout(()=>cloudPush(true), 3000); // debounce 3 detik
