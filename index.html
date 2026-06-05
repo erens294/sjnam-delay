@@ -3516,18 +3516,23 @@ function updatePreviews(){
     const cost=parseInt($('#costPerPax').value||settings.costPerPax||300000);
     $('#calcCost').textContent=formatRupiah(pax*cost);
 
-    // Delay Now = Waktu UTC sekarang - STD UTC
+    // Delay Now = Waktu UTC sekarang - STD UTC (hanya untuk flight hari ini)
     if(stdVal){
-      const s=parseUTC(`${$('#tanggal').value||new Date().toISOString().slice(0,10)}T${stdVal}`);
-      if(s && !isNaN(s.getTime())){
-        const nowUtcMs = Date.now();
-        const stdUtcMs = s.getTime();
-        let diffNow = Math.round((nowUtcMs - stdUtcMs)/60000);
-        const el=$('#calcDelayNow');
-        if(el){
-          if(diffNow<=0) el.textContent='00:00';
-          else if(diffNow > 36*60) el.textContent='--:--';
-          else el.textContent=formatHM(diffNow);
+      const flightDate = $('#tanggal').value || todayLocalStr();
+      const el = $('#calcDelayNow');
+      if(el){
+        if(flightDate !== todayLocalStr()){
+          // Flight bukan hari ini → tidak relevan
+          el.textContent = '-';
+        } else {
+          const s = parseUTC(`${flightDate}T${stdVal}`);
+          if(s && !isNaN(s.getTime())){
+            const diffNow = Math.round((Date.now() - s.getTime())/60000);
+            if(diffNow <= 0) el.textContent = '00:00';
+            else el.textContent = formatHM(diffNow);
+          } else {
+            el.textContent = '-';
+          }
         }
       }
     }
@@ -3757,17 +3762,22 @@ function renderTable(){
     const stdInfo=formatTimeLocal(d.stdUtc,origin);
     const etdInfo=formatTimeLocal(d.etdUtc,origin);
     // Delay Now = Waktu UTC sekarang - STD UTC (dalam menit)
-    // Menggunakan UTC langsung untuk menghindari double-offset
+    // Hanya tampil jika tanggal flight = HARI INI (local date device)
     const tz = getStationTz(origin);
-    const stdDate = parseUTC(d.stdUtc); // stdUtc = "2026-06-04T23:45" → parse sebagai UTC
+    const stdDate = parseUTC(d.stdUtc);
     let delayNowDisplay = '-';
     let delayNowClass = 'text-slate-400';
-    if(stdDate && !isNaN(stdDate.getTime())){
-      const nowUtcMs = Date.now(); // ms UTC sekarang
-      const stdUtcMs = stdDate.getTime(); // ms UTC saat STD
+    
+    // Cek apakah tanggal flight = hari ini berdasarkan waktu lokal device
+    const todayStr = todayLocalStr(); // "YYYY-MM-DD" lokal device
+    const isToday = (d.tanggal === todayStr);
+    
+    if(isToday && stdDate && !isNaN(stdDate.getTime())){
+      const nowUtcMs = Date.now();
+      const stdUtcMs = stdDate.getTime();
       let diffNowMin = Math.round((nowUtcMs - stdUtcMs)/60000);
-      // Jika STD > 36 jam lalu atau > 4 jam di masa depan → tampilkan tanda hubung (data sudah lewat)
-      if(diffNowMin > 36*60 || diffNowMin < -4*60){
+      if(diffNowMin < -4*60){
+        // STD masih > 4 jam ke depan, belum relevan
         delayNowDisplay = '-';
         delayNowClass = 'text-slate-400';
       } else if(diffNowMin <= 0){
@@ -4492,7 +4502,8 @@ ${namaPenerima}
 ${stationPenerima}
 
 Dengan Hormat,
-Berikut Kami Kirimkan Permohonan Approval PM89 CIU Insurance, Untuk Rute Sebagai Berikut :
+Berikut Kami Kirimkan Permohonan Approval PM89 CIU Insurance
+Untuk Rute Sebagai Berikut :
 
 Tanggal                  : ${formatDateDMY(d.tanggal)}
 Flight No                : ${d.flightNumber}
@@ -4505,7 +4516,8 @@ Jumlah Pax               : ${d.qtyPax||'0'}
 RL/OCL/Delay Notice      : ${d.about||'-'}
 Keterangan               : ${d.keterangan||d.about||'-'}
 
-Demikian disampaikan, atas perhatian dan kerjasamanya diucapkan terima kasih.
+Demikian disampaikan, atas perhatian dan kerjasamanya
+diucapkan terima kasih.
 
 Salam,
 ${namaPengirim}
