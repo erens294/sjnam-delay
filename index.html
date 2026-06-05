@@ -373,6 +373,14 @@
 <section id="tab-dashboard" class="tab-pane">
   <!-- Filter Range & Export -->
   <div class="card p-4 mb-5 flex flex-wrap items-center gap-3 no-print">
+    <div class="flex items-center gap-2">
+      <label class="text-sm font-medium whitespace-nowrap">Airlines:</label>
+      <select id="dashAirlineFilter" class="input text-sm" style="width:160px">
+        <option value="">All Airlines</option>
+        <option value="SJ">Sriwijaya Air</option>
+        <option value="IN">NAM Air</option>
+      </select>
+    </div>
     <div class="flex items-center gap-2 flex-1 min-w-0">
       <label class="text-sm font-medium whitespace-nowrap">Periode:</label>
       <input type="date" id="dashFrom" class="input text-sm w-36">
@@ -426,10 +434,10 @@
 
   <!-- KPI Row 2: Statistik Tambahan -->
   <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
-    <div class="kpi-card border-slate-300"><p class="text-xs text-slate-500">OTP %</p><p id="kpiOtp" class="text-xl font-bold mt-1 text-emerald-600">-</p><p class="text-xs text-slate-400 mt-0.5">on-time &lt;15 mnt</p></div>
-    <div class="kpi-card border-slate-300"><p class="text-xs text-slate-500">Avg Delay</p><p id="kpiAvgDelay" class="text-xl font-bold mt-1">-</p><p class="text-xs text-slate-400 mt-0.5">menit / flight</p></div>
+    <div class="kpi-card border-slate-300"><p class="text-xs text-slate-500">📅 Avg Delay / Month</p><p id="kpiAvgDelayMonth" class="text-xl font-bold mt-1 text-indigo-600">-</p><p class="text-xs text-slate-400 mt-0.5">rata-rata delay/bulan</p></div>
     <div class="kpi-card border-slate-300"><p class="text-xs text-slate-500">Delay Tertinggi</p><p id="kpiMax" class="text-xl font-bold mt-1 text-red-600">-</p><p class="text-xs text-slate-400 mt-0.5">maks delay</p></div>
-    <div class="kpi-card border-slate-300"><p class="text-xs text-slate-500">Cost / Menit</p><p id="kpiCostPerMin" class="text-lg font-bold mt-1">-</p><p class="text-xs text-slate-400 mt-0.5">Rp/menit delay</p></div>
+    <div class="kpi-card border-slate-300"><p class="text-xs text-slate-500">💰 Cost / Month</p><p id="kpiCostPerMonth" class="text-lg font-bold mt-1 text-teal-600">-</p><p class="text-xs text-slate-400 mt-0.5">rata-rata cost/bulan</p></div>
+    <div class="kpi-card border-slate-300"><p class="text-xs text-slate-500">📆 Cost / Day</p><p id="kpiCostPerDay" class="text-lg font-bold mt-1 text-purple-600">-</p><p class="text-xs text-slate-400 mt-0.5">rata-rata cost/hari</p></div>
   </div>
 
   <!-- Charts Row 1 -->
@@ -459,9 +467,9 @@
     </div>
   </div>
 
-  <!-- Top 10 Rank Delay -->
+  <!-- Top 3 Rank Delay -->
   <div class="card p-5 mb-5">
-    <h3 class="font-semibold mb-4">🏆 Top 10 Rank Delay Tertinggi (per Flight)</h3>
+    <h3 class="font-semibold mb-4">🏆 Top 3 Rank Delay Tertinggi (per Flight)</h3>
     <div class="overflow-x-auto">
       <table class="min-w-full text-sm">
         <thead class="bg-slate-50 dark:bg-slate-800">
@@ -482,22 +490,21 @@
     </div>
   </div>
 
-  <!-- Top Routes -->
-  <div class="card p-5">
-    <h3 class="font-semibold mb-4">🗺️ Top 5 Route Delay Tertinggi</h3>
-    <div class="overflow-x-auto">
-      <table class="min-w-full text-sm">
-        <thead class="bg-slate-50 dark:bg-slate-800">
-          <tr>
-            <th class="px-4 py-2 text-left font-semibold">Rank</th>
-            <th class="px-4 py-2 text-left font-semibold">Route</th>
-            <th class="px-4 py-2 text-left font-semibold">Total Delay</th>
-            <th class="px-4 py-2 text-left font-semibold">Jumlah Flight</th>
-            <th class="px-4 py-2 text-left font-semibold">Avg Delay</th>
-          </tr>
-        </thead>
-        <tbody id="topRouteBody" class="divide-y divide-slate-200 dark:divide-slate-700"></tbody>
-      </table>
+  <!-- Route Delay Bar Chart -->
+  <div class="card p-5 mb-5">
+    <h3 class="font-semibold mb-3">🗺️ Delay per Rute (Total Menit)</h3>
+    <canvas id="chartRouteBar" height="180"></canvas>
+  </div>
+
+  <!-- Charts Row 3: Trend Cost PM by Station + Pie Cost by Airlines -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-5">
+    <div class="card p-5">
+      <h3 class="font-semibold mb-3">📊 Trend Cost PM by Station</h3>
+      <canvas id="chartCostStation" height="200"></canvas>
+    </div>
+    <div class="card p-5">
+      <h3 class="font-semibold mb-3">🥧 Distribusi Cost by Airlines</h3>
+      <div class="max-w-xs mx-auto"><canvas id="chartCostAirlines" height="240"></canvas></div>
     </div>
   </div>
 </section>
@@ -2750,9 +2757,11 @@ $('#btnReset').addEventListener('click',resetForm);
 // =================================================================
 function getDashboardData(){
   const from=$('#dashFrom').value, to=$('#dashTo').value;
+  const airline=$('#dashAirlineFilter')?$('#dashAirlineFilter').value:'';
   let filtered=[...data];
   if(from) filtered=filtered.filter(d=>d.tanggal>=from);
   if(to) filtered=filtered.filter(d=>d.tanggal<=to);
+  if(airline) filtered=filtered.filter(d=>(d.flightNumber||'').toUpperCase().startsWith(airline));
   return filtered;
 }
 
@@ -3114,6 +3123,7 @@ $('#btnDashPreset7').addEventListener('click',()=>setDashPreset(7));
 $('#btnDashPreset30').addEventListener('click',()=>setDashPreset(30));
 $('#btnDashPresetAll').addEventListener('click',()=>setDashPreset(0));
 ['dashFrom','dashTo'].forEach(id=>$('#'+id).addEventListener('input',renderDashboard));
+$('#dashAirlineFilter').addEventListener('change',renderDashboard);
 
 function renderDashboard(){
   const filtered=getDashboardData();
@@ -3138,11 +3148,29 @@ function renderDashboard(){
   $('#kpiPostponed').textContent=postponedCount;
   $('#kpiCancel').textContent=cancelCount;
 
-  // KPI Row 2
-  $('#kpiOtp').textContent=`${otp}%`;
-  $('#kpiAvgDelay').textContent=avgDelay+'m';
+  // KPI Row 2 - Avg Delay/Month, Cost/Month, Cost/Day
+  const monthlyMap2={};
+  filtered.forEach(d=>{
+    if(!d.tanggal) return;
+    const ym=d.tanggal.slice(0,7);
+    if(!monthlyMap2[ym]) monthlyMap2[ym]={cost:0,delay:0,count:0,days:new Set()};
+    monthlyMap2[ym].cost+=(parseInt(d.qtyPax)||0)*(parseInt(d.costPerPax)||settings.costPerPax||300000);
+    monthlyMap2[ym].delay+=Math.max(0,d.delayMenit);
+    monthlyMap2[ym].count+=1;
+    monthlyMap2[ym].days.add(d.tanggal);
+  });
+  const numMonths=Object.keys(monthlyMap2).length||1;
+  const avgDelayPerMonth=Math.round(totalDelayMin/numMonths);
+  const costPerMonth=Math.round(totalCost/numMonths);
+  // count distinct days
+  const allDays=new Set(filtered.map(d=>d.tanggal).filter(Boolean));
+  const numDays=allDays.size||1;
+  const costPerDay=Math.round(totalCost/numDays);
+
+  $('#kpiAvgDelayMonth').textContent=formatHM(avgDelayPerMonth);
   $('#kpiMax').textContent=formatHM(maxDelay);
-  $('#kpiCostPerMin').textContent=formatRupiah(costPerMin);
+  $('#kpiCostPerMonth').textContent=totalCost>=1000000?`Rp ${(costPerMonth/1000000).toFixed(1)}jt`:formatRupiah(costPerMonth);
+  $('#kpiCostPerDay').textContent=totalCost>=1000000?`Rp ${(costPerDay/1000000).toFixed(1)}jt`:formatRupiah(costPerDay);
 
   const cats=['ATC','Teknik','Operasional','Cuaca','Lainnya'];
   const catColors=['#8b5cf6','#f59e0b','#3b82f6','#06b6d4','#94a3b8'];
@@ -3240,9 +3268,9 @@ function renderDashboard(){
     options:{responsive:true,plugins:{legend:{position:'bottom',labels:{color:tickColor,padding:12}}},cutout:'60%'}
   });
 
-  // Top 10 Rank Delay Tertinggi per Flight
-  const top10=filtered.slice().sort((a,b)=>b.delayMenit-a.delayMenit).slice(0,10);
-  const rankEmoji=['🥇','🥈','🥉','4️⃣','5️⃣','6️⃣','7️⃣','8️⃣','9️⃣','🔟'];
+  // Top 3 Rank Delay Tertinggi per Flight
+  const top10=filtered.slice().sort((a,b)=>b.delayMenit-a.delayMenit).slice(0,3);
+  const rankEmoji=['🥇','🥈','🥉'];
   const katBadge={ATC:'bg-purple-100 text-purple-700',Teknik:'bg-amber-100 text-amber-700',Operasional:'bg-blue-100 text-blue-700',Cuaca:'bg-cyan-100 text-cyan-700',Lainnya:'bg-slate-100 text-slate-700'};
   $('#topDelayBody').innerHTML=top10.map((d,i)=>{
     const costVal=(parseInt(d.qtyPax)||0)*(parseInt(d.costPerPax)||settings.costPerPax||300000);
@@ -3260,42 +3288,97 @@ function renderDashboard(){
     </tr>`;
   }).join('')||`<tr><td colspan="9" class="px-4 py-8 text-center text-slate-500">Belum ada data</td></tr>`;
 
-  // Top 5 Routes
-  const routeMap={};
+  // Route Delay Bar Chart (all routes, sorted by total delay desc)
+  const routeMap2={};
   filtered.forEach(d=>{
-    if(!routeMap[d.route]) routeMap[d.route]={total:0,count:0};
-    routeMap[d.route].total+=Math.max(0,d.delayMenit);
-    routeMap[d.route].count+=1;
+    if(!d.route) return;
+    if(!routeMap2[d.route]) routeMap2[d.route]={total:0,count:0};
+    routeMap2[d.route].total+=Math.max(0,d.delayMenit);
+    routeMap2[d.route].count+=1;
   });
-  const topRoutes=Object.entries(routeMap).map(([route,v])=>({route,...v})).sort((a,b)=>b.total-a.total).slice(0,5);
-  $('#topRouteBody').innerHTML=topRoutes.map((r,i)=>`
-    <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
-      <td class="px-4 py-2.5 font-bold">${['🥇','🥈','🥉','4️⃣','5️⃣'][i]}</td>
-      <td class="px-4 py-2.5 font-mono font-semibold">${r.route}</td>
-      <td class="px-4 py-2.5"><span class="badge bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300">${formatHM(r.total)}</span></td>
-      <td class="px-4 py-2.5">${r.count} flight</td>
-      <td class="px-4 py-2.5">${formatHM(Math.round(r.total/r.count))}</td>
-    </tr>
-  `).join('')||`<tr><td colspan="5" class="px-4 py-8 text-center text-slate-500">Belum ada data</td></tr>`;
+  const allRoutes=Object.entries(routeMap2).map(([route,v])=>({route,...v})).sort((a,b)=>b.total-a.total);
+  const routeLabels=allRoutes.map(r=>r.route);
+  const routeDelays=allRoutes.map(r=>r.total);
+  const routeColors=routeLabels.map((_,i)=>`hsl(${(i*47)%360},65%,55%)`);
+  if(window._routeBarChart) window._routeBarChart.destroy();
+  if($('#chartRouteBar')){
+    window._routeBarChart=new Chart($('#chartRouteBar'),{
+      type:'bar',
+      data:{labels:routeLabels,datasets:[{label:'Total Delay (menit)',data:routeDelays,backgroundColor:routeColors,borderRadius:5}]},
+      options:{
+        responsive:true,
+        plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${formatHM(ctx.parsed.y)}`}}},
+        scales:{
+          y:{grid:{color:gridColor},ticks:{color:tickColor,callback:v=>v+'m'}},
+          x:{grid:{display:false},ticks:{color:tickColor,maxRotation:45,minRotation:30,font:{size:10}}}
+        }
+      }
+    });
+  }
+
+  // Cost PM by Station (sorted by station name)
+  const stationCostMap={};
+  filtered.forEach(d=>{
+    if(!d.route||d.route.length<3) return;
+    const origin=d.route.slice(0,3);
+    if(!stationCostMap[origin]) stationCostMap[origin]=0;
+    stationCostMap[origin]+=(parseInt(d.qtyPax)||0)*(parseInt(d.costPerPax)||settings.costPerPax||300000);
+  });
+  const stationEntries=Object.entries(stationCostMap).sort((a,b)=>a[0].localeCompare(b[0]));
+  const stationLabels=stationEntries.map(e=>e[0]);
+  const stationCosts=stationEntries.map(e=>e[1]);
+  const stationColors=stationLabels.map((_,i)=>`hsl(${(i*67+200)%360},60%,55%)`);
+  if(window._stationCostChart) window._stationCostChart.destroy();
+  if($('#chartCostStation')){
+    window._stationCostChart=new Chart($('#chartCostStation'),{
+      type:'bar',
+      data:{labels:stationLabels,datasets:[{label:'Total Cost PM (Rp)',data:stationCosts,backgroundColor:stationColors,borderRadius:5}]},
+      options:{
+        responsive:true,
+        plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>formatRupiah(ctx.parsed.y)}}},
+        scales:{
+          y:{grid:{color:gridColor},ticks:{color:tickColor,callback:v=>v>=1000000?'Rp '+(v/1000000).toFixed(0)+'jt':'Rp '+(v/1000).toFixed(0)+'k'}},
+          x:{grid:{display:false},ticks:{color:tickColor,maxRotation:45,font:{size:10}}}
+        }
+      }
+    });
+  }
+
+  // Pie Chart: Distribusi Cost by Airlines
+  const sjCost=filtered.filter(d=>(d.flightNumber||'').toUpperCase().startsWith('SJ')).reduce((s,d)=>s+(parseInt(d.qtyPax)||0)*(parseInt(d.costPerPax)||settings.costPerPax||300000),0);
+  const inCost=filtered.filter(d=>(d.flightNumber||'').toUpperCase().startsWith('IN')).reduce((s,d)=>s+(parseInt(d.qtyPax)||0)*(parseInt(d.costPerPax)||settings.costPerPax||300000),0);
+  const otherCost=totalCost-sjCost-inCost;
+  const airlinePieData=[sjCost,inCost,otherCost].map(v=>Math.max(0,v));
+  if(window._airlinesPieChart) window._airlinesPieChart.destroy();
+  if($('#chartCostAirlines')){
+    window._airlinesPieChart=new Chart($('#chartCostAirlines'),{
+      type:'pie',
+      data:{
+        labels:['Sriwijaya Air (SJ)','NAM Air (IN)','Lainnya'],
+        datasets:[{data:airlinePieData,backgroundColor:['#2563eb','#f59e0b','#94a3b8'],borderWidth:2,borderColor:isDark?'#1e293b':'#fff'}]
+      },
+      options:{
+        responsive:true,
+        plugins:{
+          legend:{position:'bottom',labels:{color:tickColor,padding:10,font:{size:11}}},
+          tooltip:{callbacks:{label:ctx=>{const total=airlinePieData.reduce((a,b)=>a+b,0);const pct=total?Math.round(ctx.parsed/total*100):0;return `${ctx.label}: ${ctx.parsed>=1000000?'Rp '+(ctx.parsed/1000000).toFixed(1)+'jt':formatRupiah(ctx.parsed)} (${pct}%)`;}}},
+        }
+      }
+    });
+  }
 }
 
-// Dashboard PDF Export
+// Dashboard PDF Export - Full screenshot capture
 $('#btnDashPdf').addEventListener('click', async ()=>{
   const filtered=getDashboardData();
   if(!filtered.length) return showToast('Tidak ada data','error');
 
   showToast('⏳ Menyiapkan PDF Dashboard…','info');
 
-  // Pastikan dashboard section terlihat (aktif)
   const dashSection = document.getElementById('tab-dashboard');
-
-  // Elemen yang akan di-capture (semua konten dashboard kecuali tombol filter)
-  const kpiBlock = dashSection.querySelector('.grid.grid-cols-2.sm\\:grid-cols-3');
-  const fullDash = dashSection;
-
   const {jsPDF} = window.jspdf;
   const doc = new jsPDF({orientation:'portrait', unit:'pt', format:'a4'});
-  const W = 595, margin = 24;
+  const W = 595, margin = 20;
 
   // ── HEADER ──
   doc.setFillColor(29,78,216);
@@ -3304,198 +3387,68 @@ $('#btnDashPdf').addEventListener('click', async ()=>{
   doc.setFontSize(16); doc.setFont('helvetica','bold');
   doc.text('LAPORAN OPERASIONAL DELAY — SJNAM Pro v4', W/2, 26, {align:'center'});
   doc.setFontSize(9); doc.setFont('helvetica','normal');
-  doc.text(`Periode: ${$('#dashFrom').value||'-'} s/d ${$('#dashTo').value||'-'}`, W/2, 42, {align:'center'});
+  const airlineLabel = $('#dashAirlineFilter') ? (['','Sriwijaya Air','NAM Air'][ ['','SJ','IN'].indexOf($('#dashAirlineFilter').value) ] || 'All Airlines') : 'All Airlines';
+  doc.text(`Periode: ${$('#dashFrom').value||'-'} s/d ${$('#dashTo').value||'-'} | Airlines: ${airlineLabel}`, W/2, 42, {align:'center'});
   doc.text(`Generated: ${new Date().toLocaleString('id-ID')} | Total Flight: ${filtered.length}`, W/2, 56, {align:'center'});
 
-  // ── KPI TABLE (halaman 1) ──
-  const totalDelayMin = filtered.reduce((s,d)=>s+Math.max(0,d.delayMenit),0);
-  const totalPax      = filtered.reduce((s,d)=>s+(parseInt(d.qtyPax)||0),0);
-  const totalCost     = filtered.reduce((s,d)=>s+(parseInt(d.qtyPax)||0)*(parseInt(d.costPerPax)||settings.costPerPax||300000),0);
-  const otp           = filtered.length?Math.round((filtered.filter(d=>d.delayMenit<15).length/filtered.length)*100):0;
-  const avgDelay      = filtered.length?Math.round(totalDelayMin/filtered.length):0;
-  const maxDelay      = filtered.length?Math.max(...filtered.map(d=>d.delayMenit)):0;
-  const cancelCount   = filtered.filter(d=>(d.flightStatus||'')==='Cancel Flight').length;
-  const postponeCount = filtered.filter(d=>(d.flightStatus||'')==='Postponed Flight').length;
-  const delayCount    = filtered.filter(d=>(d.flightStatus||'Delay Flight')==='Delay Flight').length;
-  const costPerMin    = totalDelayMin?Math.round(totalCost/totalDelayMin):0;
-
-  doc.setTextColor(30,41,59);
-  doc.setFontSize(11); doc.setFont('helvetica','bold');
-  doc.text('KEY PERFORMANCE INDICATOR', margin, 86);
-
-  doc.autoTable({
-    startY: 93,
-    head:[['KPI','Nilai','KPI','Nilai']],
-    body:[
-      ['✈️ Total Flight', filtered.length, '👥 Total Pax', formatNumber(totalPax)],
-      ['💰 Total Cost PM', totalCost>=1000000?`Rp ${(totalCost/1000000).toFixed(1)}jt`:formatRupiah(totalCost), '⏱️ Flight Delay', delayCount],
-      ['📅 Flight Postponed', postponeCount, '❌ Flight Cancel', cancelCount],
-      ['📊 OTP %', otp+'%', '⌛ Avg Delay', avgDelay+' menit'],
-      ['🔺 Delay Tertinggi', formatHM(maxDelay), '💸 Cost/Menit', formatRupiah(costPerMin)],
-    ],
-    styles:{fontSize:9, cellPadding:5},
-    headStyles:{fillColor:[29,78,216], textColor:255, fontStyle:'bold'},
-    columnStyles:{0:{fontStyle:'bold',cellWidth:130},1:{halign:'right',cellWidth:100},2:{fontStyle:'bold',cellWidth:130},3:{halign:'right',cellWidth:100}},
-    margin:{left:margin, right:margin},
-    alternateRowStyles:{fillColor:[239,246,255]}
-  });
-
-  // ── DISTRIBUSI KATEGORI ──
-  const cats=['ATC','Teknik','Operasional','Cuaca','Lainnya'];
-  const catRows=cats.map(c=>{
-    const flights=filtered.filter(d=>d.kategori===c);
-    const tot=flights.reduce((s,d)=>s+Math.max(0,d.delayMenit),0);
-    return [c, flights.length, formatHM(tot), formatHM(flights.length?Math.round(tot/flights.length):0)];
-  });
-
-  const yKat = doc.lastAutoTable.finalY + 14;
-  doc.setFontSize(11); doc.setFont('helvetica','bold');
-  doc.text('DISTRIBUSI DELAY PER KATEGORI', margin, yKat);
-  doc.autoTable({
-    startY: yKat+6,
-    head:[['Kategori','Jumlah Flight','Total Delay','Avg Delay']],
-    body: catRows,
-    styles:{fontSize:9, cellPadding:5},
-    headStyles:{fillColor:[29,78,216], textColor:255},
-    columnStyles:{0:{fontStyle:'bold'},1:{halign:'center'},2:{halign:'right'},3:{halign:'right'}},
-    margin:{left:margin, right:margin},
-    alternateRowStyles:{fillColor:[248,250,252]}
-  });
-
-  // ── TOP 10 DELAY ──
-  const top10 = filtered.slice().sort((a,b)=>b.delayMenit-a.delayMenit).slice(0,10);
-  const yTop = doc.lastAutoTable.finalY + 14;
-  doc.setFontSize(11); doc.setFont('helvetica','bold');
-  doc.text('TOP 10 RANK DELAY TERTINGGI', margin, yTop);
-  doc.autoTable({
-    startY: yTop+6,
-    head:[['#','Tanggal','Flight','Route','Delay','Kategori','Status','Pax','Cost PM']],
-    body: top10.map((d,i)=>[
-      i+1,
-      formatDateDMY(d.tanggal),
-      d.flightNumber,
-      d.route,
-      formatHM(d.delayMenit),
-      d.kategori,
-      d.flightStatus||'Delay Flight',
-      (parseInt(d.qtyPax)||0),
-      formatRupiah((parseInt(d.qtyPax)||0)*(parseInt(d.costPerPax)||settings.costPerPax||300000))
-    ]),
-    styles:{fontSize:8, cellPadding:4},
-    headStyles:{fillColor:[29,78,216], textColor:255},
-    columnStyles:{0:{halign:'center',cellWidth:18},4:{halign:'center'},7:{halign:'right'},8:{halign:'right'}},
-    margin:{left:margin, right:margin},
-    alternateRowStyles:{fillColor:[248,250,252]}
-  });
-
-  // ── MONTHLY COST TABLE ──
-  const monthlyMap={};
-  filtered.forEach(d=>{
-    if(!d.tanggal) return;
-    const ym=d.tanggal.slice(0,7);
-    if(!monthlyMap[ym]) monthlyMap[ym]={cost:0,delay:0,count:0,pax:0};
-    monthlyMap[ym].cost+=(parseInt(d.qtyPax)||0)*(parseInt(d.costPerPax)||settings.costPerPax||300000);
-    monthlyMap[ym].delay+=Math.max(0,d.delayMenit);
-    monthlyMap[ym].count+=1;
-    monthlyMap[ym].pax+=(parseInt(d.qtyPax)||0);
-  });
-  const MONTH_NAMES=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  const sortedMonths=Object.keys(monthlyMap).sort();
-
-  if(sortedMonths.length){
-    const yMon = doc.lastAutoTable.finalY + 14;
-    // Cek apakah perlu halaman baru
-    const pageH = 842;
-    const yStart = yMon > pageH - 100 ? (doc.addPage(), margin+20) : yMon;
-    doc.setFontSize(11); doc.setFont('helvetica','bold');
-    doc.text('TREN MONTHLY COST PM', margin, yStart);
-    doc.autoTable({
-      startY: yStart+6,
-      head:[['Bulan','Flight','Pax','Total Delay','Total Cost PM']],
-      body: sortedMonths.map(ym=>{
-        const [y,m]=ym.split('-');
-        return [MONTH_NAMES[parseInt(m)-1]+' '+y, monthlyMap[ym].count, formatNumber(monthlyMap[ym].pax), formatHM(monthlyMap[ym].delay), formatRupiah(monthlyMap[ym].cost)];
-      }),
-      styles:{fontSize:9, cellPadding:5},
-      headStyles:{fillColor:[29,78,216], textColor:255},
-      columnStyles:{1:{halign:'center'},2:{halign:'right'},3:{halign:'right'},4:{halign:'right'}},
-      margin:{left:margin, right:margin},
-      alternateRowStyles:{fillColor:[248,250,252]},
-      foot:[['TOTAL', filtered.length, formatNumber(totalPax), formatHM(totalDelayMin), formatRupiah(totalCost)]],
-      footStyles:{fillColor:[30,58,138], textColor:255, fontStyle:'bold'}
-    });
-  }
-
-  // ── CAPTURE CHARTS (halaman baru) ──
   try {
-    // Capture area charts dari DOM
-    const chartArea = dashSection.querySelector('.grid.grid-cols-1.lg\\:grid-cols-2.gap-5.mb-5');
-    if(chartArea && typeof html2canvas !== 'undefined'){
-      doc.addPage();
+    // Hide the no-print filter bar temporarily visible for capture
+    const noprints = dashSection.querySelectorAll('.no-print');
+    noprints.forEach(el=>el.style.display='none');
 
-      // Header halaman chart
-      doc.setFillColor(29,78,216);
-      doc.rect(0,0,W,36,'F');
-      doc.setTextColor(255,255,255);
-      doc.setFontSize(12); doc.setFont('helvetica','bold');
-      doc.text('VISUALISASI GRAFIK DASHBOARD', W/2, 22, {align:'center'});
+    // Get all card elements in dashboard section
+    const allCards = Array.from(dashSection.querySelectorAll('.kpi-card, .card'));
+    // Instead capture the whole dashboard section in parts
+    // Capture each major block
+    const blocks = [
+      // KPI rows
+      dashSection.querySelector('.grid.grid-cols-2.sm\:grid-cols-3.xl\:grid-cols-6'),
+      dashSection.querySelector('.grid.grid-cols-2.sm\:grid-cols-4'),
+      // Charts row 1
+      ...Array.from(dashSection.querySelectorAll('.grid.grid-cols-1.lg\:grid-cols-2.gap-5')),
+      // Top 3 rank
+      ...Array.from(dashSection.querySelectorAll('.card.p-5.mb-5')),
+      // Route chart
+      dashSection.querySelector('.card.p-5:last-of-type')
+    ].filter(Boolean);
 
-      doc.setTextColor(30,41,59);
-      doc.setFontSize(9); doc.setFont('helvetica','normal');
-      doc.text(`Periode: ${$('#dashFrom').value||'-'} s/d ${$('#dashTo').value||'-'}`, margin, 50);
+    // Actually, easiest: capture the whole dashSection in sequential blocks
+    // Use a simpler approach: capture all direct children cards/grids
+    const captureEls = Array.from(dashSection.children).filter(el => !el.classList.contains('no-print'));
+    
+    const bgColor = document.documentElement.classList.contains('dark') ? '#1e293b' : '#ffffff';
+    let yPos = 78;
 
-      // Capture semua card chart pertama (Monthly Cost + Pie)
-      const allChartRows = dashSection.querySelectorAll('.grid.grid-cols-1.lg\\:grid-cols-2.gap-5.mb-5');
-      let yChart = 58;
-
-      for(const row of allChartRows){
-        const canvas = await html2canvas(row, {
-          scale: 1.5,
-          backgroundColor: document.documentElement.classList.contains('dark') ? '#1e293b' : '#ffffff',
+    for(const el of captureEls) {
+      if(!el || el.offsetHeight < 5) continue;
+      try {
+        const canvas = await html2canvas(el, {
+          scale: 1.8,
+          backgroundColor: bgColor,
           logging: false,
           useCORS: true
         });
-        const imgData = canvas.toDataURL('image/jpeg', 0.92);
+        const imgData = canvas.toDataURL('image/jpeg', 0.90);
         const imgW = W - margin*2;
         const imgH = (canvas.height / canvas.width) * imgW;
 
-        if(yChart + imgH > 820){
+        if(yPos + imgH > 820) {
           doc.addPage();
-          yChart = margin;
+          yPos = margin;
         }
-        doc.addImage(imgData, 'JPEG', margin, yChart, imgW, imgH);
-        yChart += imgH + 12;
-      }
-
-      // Capture tabel Top 10 dari DOM
-      const topDelaySection = dashSection.querySelector('.card.p-5.mb-5');
-      if(topDelaySection){
-        if(yChart + 80 > 820){ doc.addPage(); yChart = margin; }
-        const tblCanvas = await html2canvas(topDelaySection, {
-          scale:1.5,
-          backgroundColor: document.documentElement.classList.contains('dark') ? '#1e293b':'#ffffff',
-          logging:false
-        });
-        const tW=W-margin*2;
-        const tH=(tblCanvas.height/tblCanvas.width)*tW;
-        if(yChart + tH > 820){ doc.addPage(); yChart=margin; }
-        doc.addImage(tblCanvas.toDataURL('image/jpeg',0.9),'JPEG',margin,yChart,tW,tH);
-        yChart+=tH+12;
+        doc.addImage(imgData, 'JPEG', margin, yPos, imgW, imgH);
+        yPos += imgH + 8;
+      } catch(e2) {
+        console.warn('Block capture error:', e2);
       }
     }
-  } catch(e){
-    console.warn('Chart capture failed, skipping visual page:', e);
-  }
 
-  // ── TTD ──
-  const pgCount = doc.getNumberOfPages();
-  doc.setPage(pgCount);
-  const finalY = doc.lastAutoTable ? doc.lastAutoTable.finalY+28 : 700;
-  const yTtd = Math.min(finalY, 760);
-  doc.setFont('helvetica','normal'); doc.setFontSize(9); doc.setTextColor(30,41,59);
-  doc.text('Mengetahui,', 400, yTtd);
-  doc.text('_________________________', 380, yTtd+44);
-  doc.text('Station Manager', 400, yTtd+56);
+    // Restore no-print
+    noprints.forEach(el=>el.style.display='');
+
+  } catch(e) {
+    console.warn('Dashboard capture failed:', e);
+  }
 
   // Page numbers
   const totalPages = doc.getNumberOfPages();
