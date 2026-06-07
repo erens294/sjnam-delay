@@ -138,7 +138,7 @@
       <h3 class="font-semibold text-sm text-slate-600 dark:text-slate-300 mb-4 uppercase tracking-wide">Langkah 1 — Identitas Penerbangan</h3>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <div>
-          <label class="block text-sm font-medium mb-1.5">Tanggal Penerbangan</label>
+          <label class="block text-sm font-medium mb-1.5">Date of Flight</label>
           <input type="date" id="tanggal" class="input" required="">
         </div>
         <div>
@@ -170,6 +170,7 @@
           <label class="block text-sm font-medium mb-1.5">Approval</label>
           <select id="approval" class="input">
             <option value="Not-Approved">Not-Approved</option>
+            <option value="On-Process">On-Process</option>
             <option value="Approved">Approved</option>
           </select>
         </div>
@@ -328,7 +329,7 @@
         <thead class="bg-slate-100 dark:bg-slate-800">
           <tr class="text-left">
             <th class="px-2 py-2.5 font-semibold text-xs uppercase">No</th>
-            <th class="px-2 py-2.5 font-semibold text-xs uppercase">Tanggal</th>
+            <th class="px-2 py-2.5 font-semibold text-xs uppercase">DATE</th>
             <th class="px-2 py-2.5 font-semibold text-xs uppercase">Flight</th>
             <th class="px-2 py-2.5 font-semibold text-xs uppercase">Route</th>
             <th class="px-2 py-2.5 font-semibold text-xs uppercase">STD</th>
@@ -475,7 +476,7 @@
         <thead class="bg-slate-50 dark:bg-slate-800">
           <tr>
             <th class="px-3 py-2 text-left font-semibold text-xs">Rank</th>
-            <th class="px-3 py-2 text-left font-semibold text-xs">Tanggal</th>
+            <th class="px-3 py-2 text-left font-semibold text-xs">DATE</th>
             <th class="px-3 py-2 text-left font-semibold text-xs">Flight</th>
             <th class="px-3 py-2 text-left font-semibold text-xs">Route</th>
             <th class="px-3 py-2 text-left font-semibold text-xs">Delay</th>
@@ -1083,7 +1084,7 @@
       <table class="min-w-full text-sm">
         <thead class="bg-slate-100 dark:bg-slate-800">
           <tr>
-            <th class="px-3 py-2.5 text-left font-semibold text-xs uppercase">Tanggal</th>
+            <th class="px-3 py-2.5 text-left font-semibold text-xs uppercase">DATE</th>
             <th class="px-3 py-2.5 text-left font-semibold text-xs uppercase">Flight</th>
             <th class="px-3 py-2.5 text-left font-semibold text-xs uppercase">Route</th>
             <th class="px-3 py-2.5 text-left font-semibold text-xs uppercase">STD UTC</th>
@@ -2870,9 +2871,28 @@ function renderTable(){
     }
     const delayColor=d.delayMenit>=240?'bg-red-200 text-red-800 dark:bg-red-900/50 dark:text-red-200':d.delayMenit>0?'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300':'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300';
     const katColor=katColors[d.kategori]||'bg-slate-100 text-slate-700';
-    const apColor=d.approval==='Approved'?'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300':'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300';
+    const apColor=d.approval==='Approved'?'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300':d.approval==='On-Process'?'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300':'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300';
     const sColor=statusColor[d.flightStatus]||'status-delay';
     const costVal=(d.qtyPax||0)*(d.costPerPax||settings.costPerPax||300000);
+    // OCL local time conversion
+    let oclDisplay = '-';
+    if(d.oclTime && d.stdUtc){
+      const [hh,mm]=d.oclTime.split(':').map(Number);
+      const std=parseUTC(d.stdUtc);
+      if(std){
+        let oclUtc=new Date(Date.UTC(std.getUTCFullYear(),std.getUTCMonth(),std.getUTCDate(),hh,mm));
+        if(oclUtc<std) oclUtc=new Date(oclUtc.getTime()+24*3600000);
+        const originIataOcl=getRouteOrigin(d.route);
+        const tzOcl=getStationTz(originIataOcl);
+        const oclLocal=new Date(oclUtc.getTime()+tzOcl*3600000);
+        const lh=String(oclLocal.getUTCHours()).padStart(2,'0');
+        const lm=String(oclLocal.getUTCMinutes()).padStart(2,'0');
+        const tzName=tzOcl===7?'WIB':tzOcl===8?'WITA':'WIT';
+        oclDisplay=`${lh}:${lm} <span class="text-slate-400">${tzName}</span>`;
+      }
+    } else if(d.oclTime){
+      oclDisplay=d.oclTime;
+    }
     return `<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
       <td class="px-2 py-2 text-slate-500 text-xs">${no}</td>
       <td class="px-2 py-2 whitespace-nowrap text-xs font-medium">${formatDateDMY(d.tanggal)}</td>
@@ -2891,7 +2911,7 @@ function renderTable(){
       </td>
       <td class="px-2 py-2"><span class="badge ${delayColor}">${formatHM(d.delayMenit)}</span></td>
       <td class="px-2 py-2"><span class="flight-status-badge ${sColor} text-xs">${d.flightStatus||'Delay Flight'}</span></td>
-      <td class="px-2 py-2 font-mono text-xs">${d.oclTime||'-'}</td>
+      <td class="px-2 py-2 font-mono text-xs">${oclDisplay}</td>
       <td class="px-2 py-2"><span class="badge ${katColor}">${d.kategori}</span></td>
       <td class="px-2 py-2"><span class="badge ${apColor}">${d.approval||'Not-Approved'}</span></td>
       <td class="px-2 py-2 text-center"><input type="number" min="0" value="${d.qtyPax||0}" data-qty-id="${d.id}" class="qty-input text-xs"/></td>
@@ -3017,7 +3037,7 @@ $('#btnExportExcel').addEventListener('click',()=>{
       return local.toISOString().substr(11,5)+' '+tzName;
     };
     return {
-      No:i+1, Tanggal:formatDateDMY(d.tanggal), Flight:d.flightNumber, Route:d.route,
+      No:i+1, DATE:formatDateDMY(d.tanggal), Flight:d.flightNumber, Route:d.route,
       STD_Local:toLocal(d.stdUtc), ETD_Local:toLocal(d.etdUtc),
       ATD_Local:d.atdUtc?toLocal(d.atdUtc):'-',
       Delay_Menit:d.delayMenit, Delay_HH_MM:formatHM(d.delayMenit),
@@ -3031,7 +3051,7 @@ $('#btnExportExcel').addEventListener('click',()=>{
   const totalPax = rows.reduce((s,r)=>s+(r.Pax||0),0);
   const totalCost = rows.reduce((s,r)=>s+(r.Cost_PM89||0),0);
   rows.push({
-    No:'', Tanggal:'', Flight:'TOTAL', Route:'',
+    No:'', DATE:'', Flight:'TOTAL', Route:'',
     STD_Local:'', ETD_Local:'', ATD_Local:'',
     Delay_Menit:'', Delay_HH_MM:'',
     Flight_Status:'', Kategori:'', Approval:'',
@@ -3075,7 +3095,7 @@ $('#btnExportPdf').addEventListener('click',()=>{
   body.push(['','','TOTAL','','','','','','','',totalPax,formatRupiah(totalCost)]);
   doc.autoTable({
     startY:65,
-    head:[['No','Tanggal','Flight','Route','STD (Local)','ETD (Local)','Delay','Status','Kat.','Approval','Pax','Cost PM89']],
+    head:[['No','DATE','Flight','Route','STD (Local)','ETD (Local)','Delay','Status','Kat.','Approval','Pax','Cost PM89']],
     body:body,
     styles:{fontSize:7},
     headStyles:{fillColor:[29,78,216]},
@@ -3451,7 +3471,7 @@ $('#btnDashExcel').addEventListener('click',()=>{
     const tz = getStationTz(origin);
     const toLocal = (iso)=>{ if(!iso) return '-'; const dt=parseUTC(iso); const local=new Date(dt.getTime()+tz*3600000); return local.toISOString().substr(11,5); };
     return {
-      No:i+1,Tanggal:formatDateDMY(d.tanggal),Flight:d.flightNumber,Route:d.route,
+      No:i+1,DATE:formatDateDMY(d.tanggal),Flight:d.flightNumber,Route:d.route,
       STD:toLocal(d.stdUtc),ETD:toLocal(d.etdUtc),
       Delay_Min:d.delayMenit,Delay:formatHM(d.delayMenit),
       Status:d.flightStatus||'Delay Flight',Kategori:d.kategori,Approval:d.approval||'',
@@ -3460,7 +3480,7 @@ $('#btnDashExcel').addEventListener('click',()=>{
   });
   const totalPax = rows.reduce((s,r)=>s+(r.Pax||0),0);
   const totalCost = rows.reduce((s,r)=>s+(r.Cost||0),0);
-  rows.push({No:'',Tanggal:'',Flight:'TOTAL',Route:'',STD:'',ETD:'',Delay_Min:'',Delay:'',Status:'',Kategori:'',Approval:'',Pax:totalPax,Cost:totalCost});
+  rows.push({No:'',DATE:'',Flight:'TOTAL',Route:'',STD:'',ETD:'',Delay_Min:'',Delay:'',Status:'',Kategori:'',Approval:'',Pax:totalPax,Cost:totalCost});
   const ws=XLSX.utils.json_to_sheet(rows);
   const wb=XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb,ws,'Dashboard');
@@ -3512,7 +3532,7 @@ Dengan Hormat,
 Berikut Kami Kirimkan Permohonan Approval PM89 CIU Insurance
 Untuk Rute Sebagai Berikut :
 
-Tanggal                  : ${formatDateDMY(d.tanggal)}
+DATE                    : ${formatDateDMY(d.tanggal)}
 Flight No                : ${d.flightNumber}
 Route                    : ${d.route}
 Flight Status            : ${d.flightStatus||'Delay Flight'}
@@ -4229,7 +4249,7 @@ $('#btnDfsExportExcel').addEventListener('click',()=>{
     const stationName = (stations.find(s=>s.iata===f.origin)||{}).name || f.origin;
     return {
       No:i+1,
-      Tanggal:formatDfsDate(f.date),
+      DATE:formatDfsDate(f.date),
       Flight:f.flight,
       Route:f.origin+'-'+f.dest,
       'Bank Station (Origin)':stationName + ' (UTC+'+tz+' '+tzName+')',
